@@ -1,14 +1,35 @@
 <template>
   <main-layout>
     <div id="app" class="container my-5">
-      <div class="row">
+      <!-- <div class="row">
         <Hero
           v-for="hero in heros"
           :key="hero.hero_id"
           :id="hero.hero_id"
           :name="hero.name"
           :image="hero.image_url"></Hero>
-      </div>
+      </div> -->
+      <section id="portfolio" class="section portfolio-section">
+            <div class="section-area">
+                <div class="section-content">
+                    <div class="container">
+                        <div class="title-block mx-auto">
+                            <div class="section_title mb-4 text-center">
+                                <h2><span>All Heros!!!</span></h2>
+                            </div>
+                        </div>
+                        <div class="portfolio-items row">
+                          <Hero
+                          v-for="hero in heros"
+                          :key="hero.hero_id"
+                          :id="hero.hero_id"
+                          :name="hero.name"
+                          :image="hero.image_url"></Hero>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
   </main-layout>
 </template>

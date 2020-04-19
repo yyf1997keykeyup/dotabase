@@ -1,13 +1,139 @@
 <template>
   <main-layout>
-    <h2>{{hero.name}}</h2>
+    <!-- <h2>{{hero.name}}</h2>
     <img :src="hero.image_url" :alt="hero.name">
     <div>param: {{$route.params.id}}</div>
     <div>id: {{ hero.hero_id }}</div>
     <div>health: {{ hero.health }}</div>
     <div>damage: {{ hero.damage }}</div>
     <div>mana: {{ hero.mana }}</div>
-    <div>bio: {{ hero.bio }}</div>
+    <div>bio: {{ hero.bio }}</div> -->
+
+    <section class="section bg-light line-vector" id="aboutus">
+            <div class="section-area">
+                <div class="section-content">
+                    <div class="container">
+                        <div class="title-block mx-auto">
+                            <div class="section_title mb-4 text-center">
+                                <h2><span>{{hero.name}}</span></h2>
+                                <p class="section_subtitle mx-auto">{{hero.type}}</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                                <div class="about-img-box">
+                                    <div class="image">
+                                        <img :src="hero.image_url" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                  <div class="about-img-box">
+                                    <div class="image">
+                                        <img src="https://www.dotafire.com/images/skill/abaddon-mist-coil.png" class="img-fluid" alt="">
+                                        Mist Coil
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                  <div class="about-img-box">
+                                    <div class="image">
+                                        <img src="https://www.dotafire.com/images/skill/abaddon-aphotic-shield.png" class="img-fluid" alt="">
+                                        Aphotic Shield
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                  <div class="about-img-box">
+                                    <div class="image">
+                                        <img src="https://www.dotafire.com/images/skill/abaddon-curse-of-avernus.png" class="img-fluid" alt="">
+                                        Curse of Avernus
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                  <div class="about-img-box">
+                                    <div class="image">
+                                        <img src="https://www.dotafire.com/images/skill/abaddon-borrowed-time.png" class="img-fluid" alt="">
+                                        Borrowed Time
+                                    </div>
+                                  </div>
+                                </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="counter-block">
+                                    <span class="mdi mdi-fire"></span>
+                                    <div class="details">
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.health }}</em></h3>
+                                        <p class="mb-0">health</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="counter-block">
+                                    <span class="mdi mdi-coffee-outline"></span>
+                                    <div class="details">
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.mana }}</em></h3>
+                                        <p class="mb-0">mana</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="counter-block">
+                                    <span class="mdi mdi-account-multiple-outline"></span>
+                                    <div class="details">
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.damage }}</em></h3>
+                                        <p class="mb-0">damage</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="counter-block">
+                                    <span class="mdi mdi-trophy-outline"></span>
+                                    <div class="details">
+                                        <h3 class="mb-0 mt-0 number"><em class="count">10</em></h3>
+                                        <p class="mb-0">Nominees winner</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="expert-box text-center">
+                                    <img src="http://www.peis.in/templates/halman/images/aboutus/01.svg" class="img-fluid" alt="" />
+                                    <h3>Best Against</h3>
+                                    <p class="mb-0">hahahaha hahah hahahhaa hahahha hahhaha</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="expert-box text-center">
+                                    <img src="http://www.peis.in/templates/halman/images/aboutus/02.svg" class="img-fluid" alt="" />
+                                    <h3>Bad Against</h3>
+                                    <p class="mb-0">hahahaha hahah hahahh ahahah haha hhaha</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="expert-box text-center">
+                                    <img src="http://www.peis.in/templates/halman/images/aboutus/03.svg" class="img-fluid" alt="" />
+                                    <h3>Recommanded Item</h3>
+                                    <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Bio
+                                        </h4>
+                                        <div class="text">{{ hero.bio }} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
   </main-layout>
 </template>
 
