@@ -1,7 +1,7 @@
 {"data": [
-    { "id": 1, "name": "Abaddon", "image": "https://www.dotafire.com/images/hero/icon/abaddon.png"},
-    { "id": 2, "name": "Alchemist", "image": "https://www.dotafire.com/images/hero/icon/alchemist.png"},
-    { "id": 3, "name": "Ancient Apparition", "image": "https://www.dotafire.com/images/hero/icon/ancient-apparition.png"},
-    { "id": 4, "name": "Anti-mage", "image": "https://www.dotafire.com/images/hero/icon/anti-mage.png"}
+    { "hero_id": 1, "name": "Abaddon", "image_url": "https://www.dotafire.com/images/hero/icon/abaddon.png"},
+    { "hero_id": 2, "name": "Alchemist", "image_url": "https://www.dotafire.com/images/hero/icon/alchemist.png"},
+    { "hero_id": 3, "name": "Ancient Apparition", "image_url": "https://www.dotafire.com/images/hero/icon/ancient-apparition.png"},
+    { "hero_id": 4, "name": "Anti-mage", "image_url": "https://www.dotafire.com/images/hero/icon/anti-mage.png"}
   ]
 }

@@ -1,9 +1,9 @@
 <template>
   <main-layout>
     <h2>{{hero.name}}</h2>
-    <img :src="hero.image" :alt="hero.name">
+    <img :src="hero.image_url" :alt="hero.name">
     <div>param: {{$route.params.id}}</div>
-    <div>id: {{ hero.id }}</div>
+    <div>id: {{ hero.hero_id }}</div>
     <div>health: {{ hero.health }}</div>
     <div>damage: {{ hero.damage }}</div>
     <div>mana: {{ hero.mana }}</div>

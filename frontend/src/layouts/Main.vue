@@ -1,5 +1,10 @@
 <template>
   <div class="container my-5">
+    <div class="row mb-3">
+        <div class="col-md-9">
+          <h1>Dotabase</h1>
+        </div>
+      </div>
     <ul>
       <li>
         <router-link :to="{name: 'homepage', params: {}}"> Home </router-link>
