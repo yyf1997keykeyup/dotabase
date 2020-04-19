@@ -88,7 +88,7 @@
                                 <div class="counter-block">
                                     <span class="mdi mdi-account-multiple-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>better UI
                                         <p class="mb-0">damage</p>
                                     </div>
                                 </div>

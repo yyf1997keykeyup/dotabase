@@ -74,6 +74,7 @@ button:focus {
     outline: none !important;
 }
 /*==========================
+<<<<<<< HEAD
         4.HEADER
 ============================*/
 header {
@@ -186,6 +187,8 @@ header .navbar-brand b {
     font-size: 3rem;
 }
 /*==========================
+=======
+>>>>>>> better UI
         6.ABOUT US
 ============================*/
 .line-vector {
@@ -245,7 +248,11 @@ header .navbar-brand b {
 
     .counter-block .number em {
         font-style: normal;
+<<<<<<< HEAD
         font-size: 50px;
+=======
+        font-size: 60px;
+>>>>>>> better UI
         color: #333743;
         font-weight: 700;
     }
@@ -380,6 +387,7 @@ header .navbar-brand b {
 .portfolio-section .portfolio-icon a i {
     font-size: 26px;
     font-weight: 700;
+<<<<<<< HEAD
 }
 
 /*==========================
@@ -447,3 +455,6 @@ header .navbar-brand b {
     .copy-right b {
         color: #FF9E2B;
     }
+=======
+}
+>>>>>>> better UI
