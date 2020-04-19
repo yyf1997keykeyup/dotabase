@@ -1,13 +1,13 @@
 <template>
     <div class="col-md-3">
-        <v-link href="/detail">
+        <router-link :to="{name: 'detail', params: {'id': id}}">
         <div class="card">
             <img :src="image" :alt="name" class="card-img-top">
             <div class="card-body">
                 <h5>{{ name }}</h5>
             </div>
         </div>
-        </v-link>
+        </router-link>
     </div>
 </template>
 
@@ -23,6 +23,6 @@ export default {
   },
   components: {
       VLink
-      },
+  },
 };
 </script>
