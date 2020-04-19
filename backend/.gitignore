@@ -1,0 +1,11 @@
+/venv/
+*.sqlite3
+.classpath
+.project
+.settings
+##filter databfile、sln file##
+*.idea
+*.iml
+*.mdb
+*.ldb
+*.sln
