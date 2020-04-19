@@ -1,18 +1,34 @@
 <template>
-    <div class="col-md-3">
-        <v-link href="/detail">
+<div class="col-lg-4 portfolio-item seo">
+    <div class="image-border">
+        <div class="portfolio-box">
+            <img :src="image" class="img-fluid" alt="">
+            <div class="img-overlay text-center">
+                <div class="portfolio-icon">
+                    <router-link :to="{name: 'detail', params: {'id': id}}">
+                    <a class="js-zoom-gallery">
+                        <i class="mdi mdi-magnify-plus-outline"></i>
+                    </a>
+                    </router-link>
+                </div>
+                <h5 class="mt-3 mb-0">{{ name }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-3">
+        <router-link :to="{name: 'detail', params: {'id': id}}">
         <div class="card">
             <img :src="image" :alt="name" class="card-img-top">
             <div class="card-body">
                 <h5>{{ name }}</h5>
             </div>
         </div>
-        </v-link>
-    </div>
+        </router-link>
+    </div> -->
 </template>
 
 <script>
-import VLink from '../components/VLink.vue'
 
 export default {
   name: 'hero',
@@ -22,7 +38,6 @@ export default {
   methods: {
   },
   components: {
-      VLink
-      },
+  },
 };
 </script>

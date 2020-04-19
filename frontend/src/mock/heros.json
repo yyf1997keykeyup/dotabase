@@ -1,0 +1,7 @@
+{"data": [
+    { "hero_id": 1, "name": "Abaddon", "image_url": "https://www.dotafire.com/images/hero/icon/abaddon.png"},
+    { "hero_id": 2, "name": "Alchemist", "image_url": "https://www.dotafire.com/images/hero/icon/alchemist.png"},
+    { "hero_id": 3, "name": "Ancient Apparition", "image_url": "https://www.dotafire.com/images/hero/icon/ancient-apparition.png"},
+    { "hero_id": 4, "name": "Anti-mage", "image_url": "https://www.dotafire.com/images/hero/icon/anti-mage.png"}
+  ]
+}
