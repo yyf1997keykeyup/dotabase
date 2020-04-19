@@ -5,11 +5,14 @@ const state = {
       { id: 2, name: 'Alchemist', image: 'https://www.dotafire.com/images/hero/icon/alchemist.png'},
       { id: 3, name: 'Ancient Apparition', image: 'https://www.dotafire.com/images/hero/icon/ancient-apparition.png'},
       { id: 4, name: 'Anti-mage', image: 'https://www.dotafire.com/images/hero/icon/anti-mage.png'},
-    ]
+    ],
 }
 
 // getters
 const getters = {
+  getDetailedById: (state) => (id) => {
+    return state.all.find(hero => hero.id === id)
+  }
 }
 
 // actions

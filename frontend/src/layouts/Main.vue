@@ -2,7 +2,7 @@
   <div class="container my-5">
     <ul>
       <li>
-        <v-link href="/">Home</v-link>
+        <router-link :to="{name: 'homepage', params: {}}"> Home </router-link>
       </li>
     </ul>
 
