@@ -1,8 +1,13 @@
 <template>
   <main-layout>
-    <p>detail</p>
-    <div>{{$route.params.id}}</div>
-    <div>{{ info }}</div>
+    <h2>{{hero.name}}</h2>
+    <img :src="hero.image" :alt="hero.name">
+    <div>param: {{$route.params.id}}</div>
+    <div>id: {{ hero.id }}</div>
+    <div>health: {{ hero.health }}</div>
+    <div>damage: {{ hero.damage }}</div>
+    <div>mana: {{ hero.mana }}</div>
+    <div>bio: {{ hero.bio }}</div>
   </main-layout>
 </template>
 
@@ -10,21 +15,25 @@
   import MainLayout from '../layouts/Main.vue'
   import axios from 'axios';
 
+  const mockHeroData = require("../mock/hero_detail.json");
+
   export default {
     data: function() {
       return {
-        info: 'nothing'
+        hero: 'nothing'
       }
     },
-    beforeCreate() {
-      axios.get(`https://api.coindesk.com/v1/bpi/currentprice.json`)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.info = response.data
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    created() {
+      this.hero = mockHeroData.data;
+      console.log(this.hero);
+      // axios.get(`https://api.coindesk.com/v1/bpi/currentprice.json`)
+      // .then(response => {
+      //   // JSON responses are automatically parsed.
+      //   this.hero = response.data
+      // })
+      // .catch(e => {
+      //   this.errors.push(e)
+      // })
     },
     components: {
       MainLayout

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import VLink from '../components/VLink.vue'
 
 export default {
   name: 'hero',
@@ -22,7 +21,6 @@ export default {
   methods: {
   },
   components: {
-      VLink
   },
 };
 </script>

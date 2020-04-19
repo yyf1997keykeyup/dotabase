@@ -4,6 +4,13 @@
       <li>
         <router-link :to="{name: 'homepage', params: {}}"> Home </router-link>
       </li>
+      <li v-if="username === ''">
+        <router-link :to="{name: 'login', params: {}}"> login </router-link>
+      </li>
+      <li v-else>
+        <a> welcome, {{ username }}! Enjoy yourself or </a>
+        <button @click="logout"> LOGOUT </button>
+      </li>
     </ul>
 
     <slot></slot>
@@ -11,10 +18,19 @@
 </template>
 
 <script>
-import VLink from '../components/VLink.vue'
+import { mapState } from 'vuex' 
+
   export default {
+    computed: mapState({
+          username: state => state.login.user.username
+      }),
+    methods: {
+        logout (evt) {
+            evt.preventDefault()
+            this.$store.commit('login/logoutRequest')
+        }
+    },
     components: {
-      VLink
     }
   }
 </script>
