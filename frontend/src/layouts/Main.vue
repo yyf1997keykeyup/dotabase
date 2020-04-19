@@ -64,7 +64,6 @@
                     </ul>
                 </nav>
             </div>
-
         </header>
         <slot></slot>
         </div>

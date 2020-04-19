@@ -157,6 +157,8 @@
   const mockHeroData = require("../mock/hero_detail.json");
   const mockHeroLogData = require("../mock/hero_log.json");
 
+  const mockHeroData = require("../mock/hero_detail.json");
+
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
