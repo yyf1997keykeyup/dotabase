@@ -11,6 +11,7 @@
       </li>
       <li v-if="username === ''">
         <router-link :to="{name: 'login', params: {}}"> login </router-link>
+        <router-link :to="{name: 'register', params: {}}"> register </router-link>
       </li>
       <li v-else>
         <a> welcome, {{ username }}! Enjoy yourself or </a>
