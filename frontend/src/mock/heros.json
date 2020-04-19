@@ -1,5 +1,4 @@
 {"data": [
-<<<<<<< HEAD
   { "heroid": 1, "name": "Abaddon", "imageurl": "https://www.dotafire.com/images/hero/icon/abaddon.png"},
   { "heroid": 2, "name": "Alchemist", "imageurl": "https://www.dotafire.com/images/hero/icon/alchemist.png"},
   { "heroid": 3, "name": "Ancient Apparition", "imageurl": "https://www.dotafire.com/images/hero/icon/ancient-apparition.png"},
@@ -121,11 +120,3 @@
   { "heroid": 119, "name": "Zeus", "imageurl": "https://www.dotafire.com/images/hero/icon/zeus.png"}
      ]
 }
-=======
-    { "id": 1, "name": "Abaddon", "image": "https://www.dotafire.com/images/hero/icon/abaddon.png"},
-    { "id": 2, "name": "Alchemist", "image": "https://www.dotafire.com/images/hero/icon/alchemist.png"},
-    { "id": 3, "name": "Ancient Apparition", "image": "https://www.dotafire.com/images/hero/icon/ancient-apparition.png"},
-    { "id": 4, "name": "Anti-mage", "image": "https://www.dotafire.com/images/hero/icon/anti-mage.png"}
-  ]
-}
->>>>>>> add mock data & naive login
