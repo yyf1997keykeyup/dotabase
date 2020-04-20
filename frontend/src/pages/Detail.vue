@@ -1,14 +1,5 @@
 <template>
   <main-layout>
-    <!-- <h2>{{hero.name}}</h2>
-    <img :src="hero.image_url" :alt="hero.name">
-    <div>param: {{$route.params.id}}</div>
-    <div>id: {{ hero.hero_id }}</div>
-    <div>health: {{ hero.health }}</div>
-    <div>damage: {{ hero.damage }}</div>
-    <div>mana: {{ hero.mana }}</div>
-    <div>bio: {{ hero.bio }}</div> -->
-
     <section class="section bg-light line-vector" id="aboutus">
             <div class="section-area">
                 <div class="section-content">
@@ -19,10 +10,23 @@
                                 <p class="section_subtitle mx-auto">{{hero.type}}</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <ul id="portfolio-filter" class="portfolio-filter filters">
+                                <li class="button-border list-inline-item">
+                                    <a href="#" class="pill-button active">Logging</a>
+                                </li>
+                                <li class="button-border list-inline-item">
+                                    <a href="#" class="pill-button">Modify</a>
+                                </li>
+                                <li class="button-border list-inline-item">
+                                    <a @click="deleteRequest" class="pill-button">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="row align-items-center">
                                 <div class="about-img-box">
                                     <div class="image">
-                                        <img :src="hero.image_url" class="img-fluid" alt="">
+                                        <img :src="hero.imageurl" class="img-fluid" alt="">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm-12">
@@ -114,7 +118,7 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="expert-box text-center">
                                     <img src="http://www.peis.in/templates/halman/images/aboutus/03.svg" class="img-fluid" alt="" />
-                                    <h3>Recommanded Item</h3>
+                                    <h3>Best Combo</h3>
                                     <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
                                 </div>
                             </div>

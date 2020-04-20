@@ -1,14 +1,6 @@
 <template>
   <main-layout>
     <div id="app" class="container my-5">
-      <!-- <div class="row">
-        <Hero
-          v-for="hero in heros"
-          :key="hero.hero_id"
-          :id="hero.hero_id"
-          :name="hero.name"
-          :image="hero.image_url"></Hero>
-      </div> -->
       <section id="portfolio" class="section portfolio-section">
             <div class="section-area">
                 <div class="section-content">
@@ -21,10 +13,10 @@
                         <div class="portfolio-items row">
                           <Hero
                           v-for="hero in heros"
-                          :key="hero.hero_id"
-                          :id="hero.hero_id"
+                          :key="hero.heroid"
+                          :id="hero.heroid"
                           :name="hero.name"
-                          :image="hero.image_url"></Hero>
+                          :image="hero.imageurl"></Hero>
                         </div>
                     </div>
                 </div>
@@ -44,24 +36,38 @@ const mockHerosData = require("../mock/heros.json");
 
 export default {
     name: 'app',
-      computed: mapState({
-          // heros: state => state.heros.all
-      }),
+    computed: mapState({
+      mock: state => state.debug.config.mock,
+      getAllHeroApi: state => state.api.backend.getAllHeros,
+    }),
     data() {
       return {
         heros: [],
+        errors: [],
       };
     },
     created() {
+      if (this.mock) {
         this.heros = mockHerosData.data;
-        // axios.get(`https://api.coindesk.com/v1/bpi/currentprice.json`)
-        // .then(response => {
-        //     // JSON responses are automatically parsed.
-        //     this.heros = response.data
-        // })
-        // .catch(e => {
-        //     this.errors.push(e)
-        // })
+      } else {
+        var config = {
+            headers: {
+              "Access-Control-Allow-Methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"], 
+              'Access-Control-Allow-Headers': '*', 
+              'Access-Control-Allow-Origin': '*', 
+              "useCredentails": true
+            },
+            useCredentails: true
+        };
+        axios.get(this.getAllHeroApi, config)
+        .then(response => {
+            // JSON responses are automatically parsed.
+            this.heros = response
+        })
+        .catch(e => {
+            this.errors.push(e)
+        })
+      } 
     },
     components: {
         Hero,
