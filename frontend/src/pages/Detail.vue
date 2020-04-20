@@ -153,10 +153,8 @@
   import { mapState } from 'vuex'
   import axios from 'axios'
   import FileSaver from 'file-saver'
-
   const mockHeroData = require("../mock/hero_detail.json");
   const mockHeroLogData = require("../mock/hero_log.json");
-
   const mockHeroData = require("../mock/hero_detail.json");
 
   export default {

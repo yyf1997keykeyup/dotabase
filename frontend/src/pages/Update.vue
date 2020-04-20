@@ -37,6 +37,7 @@
                                                     <div class="form-group position-relative">
                                                         <label> Damage </label>
                                                         <input v-model="hero.attr_damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
+
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
