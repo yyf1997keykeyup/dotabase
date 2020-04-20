@@ -1,6 +1,7 @@
 const state = {
+    host: "http://127.0.0.1:8000",
     backend: {
-        getAllHeros: "http://127.0.0.1:8000/api/dotabase/hero",
+        operateHero: "/api/dotabase/hero/",
     }
 }
 

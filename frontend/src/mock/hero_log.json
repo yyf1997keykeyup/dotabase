@@ -1,0 +1,9 @@
+{
+    "data": [
+        {"id": 1, "heroid": 1, "health": 1800, "damage": 120, "mana": 900},
+        {"id": 2, "heroid": 1, "health": 1700, "damage": 112, "mana": 1000},
+        {"id": 3, "heroid": 1, "health": 1600, "damage": 114, "mana": 900},
+        {"id": 4, "heroid": 1, "health": 1500, "damage": 111, "mana": 1000},
+        {"id": 5, "heroid": 1, "health": 1400, "damage": 111, "mana": 901}
+    ]
+}

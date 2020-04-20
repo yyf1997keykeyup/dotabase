@@ -1,13 +1,13 @@
 <template>
 <main-layout>
     <div class="container">
-    <div class="row align-items-center">
-        <div class="col-md-12 order-2 order-md-1">
-            <div class="p-4 contact-box rounded form-box">
-                <h4 class="m-0">Update a new version!</h4>
+<div class="row align-items-center">
+    <div class="col-md-12 order-2 order-md-1">
+                                <div class="p-4 contact-box rounded form-box">
+                                    <h4 class="m-0">Create a new Hero!</h4>
                                     <div class="custom-form">
                                         <div id="message"></div>
-                                        <a>
+                                        <form @submit="createRequest">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group position-relative">
@@ -54,13 +54,11 @@
                                             </div><!--end row-->
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <a @click="updateRequest">
-                                                        <button name="send" class="btn btn-hover send-btn btn-block">UPDATE</button>
-                                                    </a>
+                                                    <input type="submit" name="send" class="btn btn-hover send-btn btn-block" value="Update!">
                                                     <div id="simple-msg"></div>
                                                 </div><!--end col-->
                                             </div><!--end row-->
-                                        </a><!--end form-->
+                                        </form><!--end form-->
                                     </div><!--end custom-form-->
                                 </div>
                             </div><!--end col-->
@@ -88,40 +86,40 @@
     }),
     data: function() {
       return {
-        hero: {},
+        hero: {
+            name: "",
+            type: "",
+            health: "",
+            mana: "",
+            damage: "",
+            imageurl: "",
+            bio: "",
+        },
         errors: [],
       }
     },
     created() {
-        if (this.mock) {
-            this.hero = mockHeroData.data;
-        } else {
-            axios.get(operateHeroApi + `/` + this.hero.id)
-            .then(response => {
-                this.hero = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
-        }
     },
     methods: {
-        updateRequest(evt) {
+        createRequest(evt) {
             if (!this.mock) {
                 var config = {
                     useCredentails: true,
                     data: this.hero
                 };
-                axios.put(operateHeroApi + `/` + this.hero.id, config)
+                axios.post(operateHeroApi + `/` + this.hero.id, config)
                 .then(response => {
                     this.hero = response.data
+                    alert("succeed to create!")
+                    this.$router.push({path: "/detail", param: {"id": this.hero.id}})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
+            } else {
+                alert("succeed to create!")
+                this.$router.push({path: "/detail", param: {"id": this.hero.id}})
             }
-            alert("succeed to update!")
-            this.$router.push({path: "/detail", param: {"id": this.hero.id}})
         }
     },
     components: {

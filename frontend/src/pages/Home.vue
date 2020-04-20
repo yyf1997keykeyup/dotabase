@@ -10,6 +10,18 @@
                                 <h2><span>All Heros!!!</span></h2>
                             </div>
                         </div>
+                        <div class="row">
+                            <ul id="portfolio-filter" class="portfolio-filter filters">
+                                <li class="button-border list-inline-item">
+                                    <a @click="exportAllHerosRequest" class="pill-button">Export All Heros</a>
+                                </li>
+                                <router-link :to="{name: 'create'}"> 
+                                    <li class="button-border list-inline-item">
+                                        <a class="pill-button">Create a New Hero</a>
+                                    </li>
+                                </router-link>
+                            </ul>
+                        </div>
                         <div class="portfolio-items row">
                           <Hero
                           v-for="hero in heros"
@@ -31,6 +43,8 @@ import Hero from '../components/Hero';
 import { mapState } from 'vuex'
 import MainLayout from '../layouts/Main.vue'
 import axios from "axios";
+import FileSaver from 'file-saver'
+
 
 const mockHerosData = require("../mock/heros.json");
 
@@ -38,7 +52,7 @@ export default {
     name: 'app',
     computed: mapState({
       mock: state => state.debug.config.mock,
-      getAllHeroApi: state => state.api.backend.getAllHeros,
+      getAllHeroApi: state => state.api.host + state.api.backend.operateHero,
     }),
     data() {
       return {
@@ -51,23 +65,24 @@ export default {
         this.heros = mockHerosData.data;
       } else {
         var config = {
-            headers: {
-              "Access-Control-Allow-Methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"], 
-              'Access-Control-Allow-Headers': '*', 
-              'Access-Control-Allow-Origin': '*', 
-              "useCredentails": true
-            },
             useCredentails: true
         };
         axios.get(this.getAllHeroApi, config)
         .then(response => {
-            // JSON responses are automatically parsed.
-            this.heros = response
+            // console.log(response)
+            this.heros = response.data
         })
         .catch(e => {
             this.errors.push(e)
         })
       } 
+    },
+    methods: {
+        exportAllHerosRequest(evt) {
+            const data = JSON.stringify(this.heros)
+            const blob = new Blob([data], {type: ''})
+            FileSaver.saveAs(blob, 'AllHeros.json')
+        }
     },
     components: {
         Hero,
