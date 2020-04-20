@@ -1,138 +1,187 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
 
-# Create your models here.
-class Hero(models.Model):
-    TYPE_CHOICE = (
-        (0, "STRENGTH"),
-        (1, "AGILITY"),
-        (2, "INTELLIGENCE"),
-    )
+class ProjActiveeffect(models.Model):
+    effectid = models.OneToOneField('ProjEffect', models.DO_NOTHING, db_column='EffectID', primary_key=True)  # Field name made lowercase.
+    type = models.CharField(db_column='Type', max_length=255)  # Field name made lowercase.
+    mana = models.CharField(db_column='Mana', max_length=255)  # Field name made lowercase.
 
-    hero_id = models.AutoField(primary_key=True)
-    bio = models.TextField()
-    name = models.TextField(null=False)
-    type = models.SmallIntegerField(choices=TYPE_CHOICE)
-    health = models.IntegerField(null=False)
-    damage = models.IntegerField(null=False)
-    mana = models.IntegerField(null=False)
-    image_url = models.TextField()
-
-
-# TODO: 关系类是否需要设置联合主键
-class HeroBadAgainst(models.Model):
-    hero_1 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="bad_against_target_hero")
-    hero_2 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="bad_against_hero")
     class Meta:
-        unique_together = ('hero_1', 'hero_2')
+        managed = False
+        db_table = 'proj_ActiveEffect'
 
 
-class HeroBestCombos(models.Model):
-    hero_1 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="best_combos_target_hero")
-    hero_2 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="best_combos_hero")
+class ProjEffect(models.Model):
+    effictid = models.IntegerField(db_column='EffictID', primary_key=True)  # Field name made lowercase.
+    cd = models.CharField(db_column='CD', max_length=255)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=255)  # Field name made lowercase.
+
     class Meta:
-        unique_together = ('hero_1', 'hero_2')
+        managed = False
+        db_table = 'proj_Effect'
 
 
-class HeroGoodAgainst(models.Model):
-    hero_1 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="good_against_target_hero")
-    hero_2 = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="good_against_hero")
+class ProjHero(models.Model):
+    heroid = models.IntegerField(db_column='HeroID', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=255)  # Field name made lowercase.
+    type = models.CharField(db_column='Type', max_length=255)  # Field name made lowercase.
+    attr_health = models.IntegerField(db_column='Attr_Health')  # Field name made lowercase.
+    attr_damage = models.IntegerField(db_column='Attr_Damage')  # Field name made lowercase.
+    attr_mana = models.IntegerField(db_column='Attr_Mana')  # Field name made lowercase.
+    imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    bio = models.CharField(db_column='Bio', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
     class Meta:
-        unique_together = ('hero_1', 'hero_2')
+        managed = False
+        db_table = 'proj_Hero'
 
 
-class Effect(models.Model):
-    effect_id = models.AutoField(primary_key=True)
-    cd = models.TextField(null=False)
-    description = models.TextField()
+class ProjHerobadagainst(models.Model):
+    heroid_1 = models.OneToOneField(ProjHero, models.DO_NOTHING, db_column='HeroID_1', primary_key=True)  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='hero_bad_against')  # Field name made lowercase.
 
-
-class ActiveEffect(models.Model):
-    effect_id = models.IntegerField(primary_key=True)
-    type = models.TextField(null=False)
-    mana = models.IntegerField(null=False)
-    effect_id = models.ForeignKey(Effect, on_delete=models.CASCADE, related_name="active_effect")
-
-
-class PassiveEffect(models.Model):
-    effect_id = models.IntegerField(primary_key=True)
-    type = models.TextField(null=False)
-    mana = models.IntegerField(null=False)
-    effect_id = models.ForeignKey(Effect, on_delete=models.CASCADE, related_name="passive_effect")
-
-
-class Skill(models.Model):
-    id = models.AutoField(primary_key = True)
-    name = models.TextField(null=False)
-    image_url = models.TextField()
-    description = models.TextField()
-
-
-class HeroSkill(models.Model):
-    hero_id = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="hero_skill_hero")
-    skill_id = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name="hero_skill_skill")
     class Meta:
-        unique_together = ('hero_id', 'skill_id')
+        managed = False
+        db_table = 'proj_HeroBadAgainst'
+        unique_together = (('heroid_1', 'heroid_2'),)
 
 
-class Talent(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.TextField(null=False)
-    description = models.TextField()
+class ProjHerobestcombos(models.Model):
+    heroid_1 = models.OneToOneField(ProjHero, models.DO_NOTHING, db_column='HeroID_1', primary_key=True)  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='hero_best_combos')  # Field name made lowercase.
 
-
-class HeroTalent(models.Model):
-    id = models.AutoField(primary_key=True)
-    hero_id = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="hero_talent_hero")
-    talent_id = models.ForeignKey(Talent, on_delete=models.CASCADE, related_name="hero_talent_talent")
-    level = models.IntegerField(null=False)
     class Meta:
-        unique_together = ('hero_id', 'talent_id')
+        managed = False
+        db_table = 'proj_HeroBestCombos'
+        unique_together = (('heroid_1', 'heroid_2'),)
 
 
+class ProjHerogoodagainst(models.Model):
+    heroid_1 = models.OneToOneField(ProjHero, models.DO_NOTHING, db_column='HeroID_1', primary_key=True)  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='hero_good_against')  # Field name made lowercase.
 
-class Item(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.TextField(null=False)
-    category = models.TextField(null=False)
-    bonus = models.TextField(null=False)
-    cost = models.TextField(null=False)
-    description = models.TextField(null=False)
-    shop = models.TextField(null=False)
-
-
-class ItemEffect(models.Model):
-    item_id = models.IntegerField(primary_key=True)
-    item_id = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_effect_item")
-    effect_id = models.ForeignKey(Effect, on_delete=models.CASCADE, related_name="item_effect_effect")
-
-
-class ItemRecipe(models.Model):
-    item_1 = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_recipe_1")
-    item_2 = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_recipe_2")
     class Meta:
-        unique_together = ('item_1', 'item_2')
+        managed = False
+        db_table = 'proj_HeroGoodAgainst'
+        unique_together = (('heroid_1', 'heroid_2'),)
 
 
-class ItemRecommend(models.Model):
-    hero_id = models.ForeignKey(Hero, on_delete=models.CASCADE, related_name="item_recommend_hero")
-    item_id = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_recommend_item")
+class ProjHeroSkill(models.Model):
+    heroid = models.OneToOneField(ProjHero, models.DO_NOTHING, db_column='HeroID', primary_key=True)  # Field name made lowercase.
+    skillid = models.ForeignKey('ProjSkill', models.DO_NOTHING, db_column='SkillID')  # Field name made lowercase.
+
     class Meta:
-        unique_together = ('hero_id', 'item_id')
+        managed = False
+        db_table = 'proj_Hero_Skill'
+        unique_together = (('heroid', 'skillid'),)
 
 
+class ProjHeroTalent(models.Model):
+    heroid = models.IntegerField(db_column='HeroID')  # Field name made lowercase.
+    talentid = models.IntegerField(db_column='TalentID')  # Field name made lowercase.
+    level = models.IntegerField(db_column='Level')  # Field name made lowercase.
 
-class SkillEffect(models.Model):
-    skill_id = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name="skill_effect_skill")
-    effect_id = models.ForeignKey(Effect, on_delete=models.CASCADE, related_name="skill_effect_effect")
     class Meta:
-        unique_together = ('skill_id', 'effect_id')
+        managed = False
+        db_table = 'proj_Hero_Talent'
 
 
+class ProjItem(models.Model):
+    itemid = models.IntegerField(db_column='ItemID', primary_key=True)  # Field name made lowercase.
+    itemname = models.CharField(db_column='ItemName', max_length=255)  # Field name made lowercase.
+    category = models.CharField(db_column='Category', max_length=255)  # Field name made lowercase.
+    bonus = models.CharField(db_column='Bonus', max_length=255)  # Field name made lowercase.
+    cost = models.CharField(db_column='Cost', max_length=255)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=255)  # Field name made lowercase.
+    shop = models.CharField(db_column='Shop', max_length=255)  # Field name made lowercase.
 
-class HeroLog(models.Model):
-    id = models.AutoField(primary_key = True)
-    hero_id = models.IntegerField(null=False)
-    health = models.IntegerField(null=False)
-    damage = models.IntegerField(null=False)
-    mana = models.IntegerField(null=False)
+    class Meta:
+        managed = False
+        db_table = 'proj_Item'
+
+
+class ProjItemEffect(models.Model):
+    itemid = models.OneToOneField(ProjItem, models.DO_NOTHING, db_column='ItemID', primary_key=True)  # Field name made lowercase.
+    effectid = models.ForeignKey(ProjEffect, models.DO_NOTHING, db_column='EffectID')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Item_Effect'
+
+
+class ProjItemRecipe(models.Model):
+    itemid_1 = models.OneToOneField(ProjItem, models.DO_NOTHING, db_column='ItemID_1', primary_key=True)  # Field name made lowercase.
+    itemid_2 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_2', related_name='item_recipe')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Item_Recipe'
+        unique_together = (('itemid_1', 'itemid_2'),)
+
+
+class ProjItemRecommend(models.Model):
+    heroid = models.OneToOneField(ProjHero, models.DO_NOTHING, db_column='HeroID', primary_key=True)  # Field name made lowercase.
+    itemid = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Item_Recommend'
+        unique_together = (('heroid', 'itemid'),)
+
+
+class ProjPassiveeffect(models.Model):
+    peffectid = models.OneToOneField(ProjEffect, models.DO_NOTHING, db_column='PEffectID', primary_key=True)  # Field name made lowercase.
+    type = models.CharField(db_column='Type', max_length=255)  # Field name made lowercase.
+    mana = models.CharField(db_column='Mana', max_length=255)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_PassiveEffect'
+
+
+class ProjSkill(models.Model):
+    skillid = models.IntegerField(db_column='SkillID', primary_key=True)  # Field name made lowercase.
+    skillname = models.CharField(db_column='SkillName', max_length=255)  # Field name made lowercase.
+    imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=1024)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Skill'
+
+
+class ProjSkillEffect(models.Model):
+    skillid = models.OneToOneField(ProjSkill, models.DO_NOTHING, db_column='SkillID', primary_key=True)  # Field name made lowercase.
+    effectid = models.ForeignKey(ProjEffect, models.DO_NOTHING, db_column='EffectID')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Skill_Effect'
+
+
+class ProjTalent(models.Model):
+    talentid = models.IntegerField(db_column='TalentID', primary_key=True)  # Field name made lowercase.
+    talentname = models.CharField(db_column='TalentName', max_length=255)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=255)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_Talent'
+
+
+class ProjHeroLog(models.Model):
+    hero_id = models.IntegerField()
+    attr_health = models.CharField(db_column='Attr_Health', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    attr_damage = models.CharField(db_column='Attr_Damage', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    attr_maga = models.CharField(db_column='Attr_Maga', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'proj_hero_log'

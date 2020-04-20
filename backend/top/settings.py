@@ -78,8 +78,13 @@ WSGI_APPLICATION = 'top.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'dotabase',
+        'USER': 'admin',
+        'PASSWORD': 'dotabase',
+        'HOST': '64.227.18.61',
+        'PORT': '3306'
     }
 }
 
