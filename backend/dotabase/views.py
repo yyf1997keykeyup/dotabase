@@ -10,7 +10,7 @@ from dotabase.filters import *
 
 # Create your views here.
 class HeroList(generics.ListCreateAPIView):
-    queryset = Hero.objects.all()
+    queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroFilter
@@ -18,5 +18,5 @@ class HeroList(generics.ListCreateAPIView):
 
 
 class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Hero.objects.all()
+    queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer

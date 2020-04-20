@@ -8,5 +8,5 @@ class HeroFilter(django_filters.rest_framework.FilterSet):
     bio = django_filters.CharFilter(field_name="bio")
 
     class Meta:
-        model = Hero
+        model = ProjHero
         fields = ['name', 'bio',]

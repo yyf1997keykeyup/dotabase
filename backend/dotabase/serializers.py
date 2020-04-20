@@ -4,7 +4,7 @@ from dotabase.models import *
 
 class HeroSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Hero
+        model = ProjHero
         fields = '__all__'
 
 
