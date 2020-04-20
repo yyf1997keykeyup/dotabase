@@ -155,7 +155,6 @@
   import FileSaver from 'file-saver'
   const mockHeroData = require("../mock/hero_detail.json");
   const mockHeroLogData = require("../mock/hero_log.json");
-  const mockHeroData = require("../mock/hero_detail.json");
 
   export default {
     computed: mapState({
@@ -206,7 +205,7 @@
                 } else {
                     this.$router.push({name: "homepage"})
                 }
-                }
+            }
         },
         exportRequest(evt) {
             const data = JSON.stringify(this.hero)
