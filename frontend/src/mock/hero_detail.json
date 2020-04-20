@@ -1,8 +1,8 @@
 {
     "data": {
-        "hero_id": 1,
+        "heroid": 1,
         "name": "Abaddon",
-        "image_url": "https://www.dotafire.com/images/hero/icon/abaddon.png",
+        "imageurl": "https://www.dotafire.com/images/hero/icon/abaddon.png",
         "type": "Carry",
         "health": 2100,
         "damage": 55,

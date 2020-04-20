@@ -1,14 +1,5 @@
 <template>
   <main-layout>
-    <!-- <h2>{{hero.name}}</h2>
-    <img :src="hero.image_url" :alt="hero.name">
-    <div>param: {{$route.params.id}}</div>
-    <div>id: {{ hero.hero_id }}</div>
-    <div>health: {{ hero.health }}</div>
-    <div>damage: {{ hero.damage }}</div>
-    <div>mana: {{ hero.mana }}</div>
-    <div>bio: {{ hero.bio }}</div> -->
-
     <section class="section bg-light line-vector" id="aboutus">
             <div class="section-area">
                 <div class="section-content">
@@ -19,10 +10,25 @@
                                 <p class="section_subtitle mx-auto">{{hero.type}}</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <ul id="portfolio-filter" class="portfolio-filter filters">
+                                <li class="button-border list-inline-item">
+                                    <a href="#" class="pill-button active">Logging</a>
+                                </li>
+                                <router-link :to="{name: 'update', params: {'id': hero.id}}"> 
+                                    <li class="button-border list-inline-item">
+                                        <a href="#" class="pill-button">Update</a>
+                                    </li>
+                                </router-link>
+                                <li class="button-border list-inline-item">
+                                    <a @click="deleteRequest" class="pill-button">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="row align-items-center">
                                 <div class="about-img-box">
                                     <div class="image">
-                                        <img :src="hero.image_url" class="img-fluid" alt="">
+                                        <img :src="hero.imageurl" class="img-fluid" alt="">
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm-12">
@@ -114,7 +120,7 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="expert-box text-center">
                                     <img src="http://www.peis.in/templates/halman/images/aboutus/03.svg" class="img-fluid" alt="" />
-                                    <h3>Recommanded Item</h3>
+                                    <h3>Best Combo</h3>
                                     <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
                                 </div>
                             </div>
@@ -139,27 +145,34 @@
 
 <script>
   import MainLayout from '../layouts/Main.vue'
+  import { mapState } from 'vuex'
   import axios from 'axios';
 
   const mockHeroData = require("../mock/hero_detail.json");
 
   export default {
+    computed: mapState({
+      mock: state => state.debug.config.mock,
+      operateHeroApi: state => state.api.host + state.api.backend.operateHero,
+    }),
     data: function() {
       return {
-        hero: 'nothing'
+        hero: {},
+        errors: [],
       }
     },
     created() {
-      this.hero = mockHeroData.data;
-      console.log(this.hero);
-      // axios.get(`https://api.coindesk.com/v1/bpi/currentprice.json`)
-      // .then(response => {
-      //   // JSON responses are automatically parsed.
-      //   this.hero = response.data
-      // })
-      // .catch(e => {
-      //   this.errors.push(e)
-      // })
+        if (this.mock) {
+            this.hero = mockHeroData.data;
+        } else {
+            axios.get(operateHeroApi + this.hero.id)
+            .then(response => {
+                this.hero = response.data
+            })
+            .catch(e => {
+                this.errors.push(e)
+            })
+        }
     },
     components: {
       MainLayout

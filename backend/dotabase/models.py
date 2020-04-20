@@ -36,7 +36,7 @@ class ProjHero(models.Model):
     attr_damage = models.IntegerField(db_column='Attr_Damage')  # Field name made lowercase.
     attr_mana = models.IntegerField(db_column='Attr_Mana')  # Field name made lowercase.
     imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    bio = models.CharField(db_column='Bio', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    bio = models.CharField(db_column='Bio', max_length=5000, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
