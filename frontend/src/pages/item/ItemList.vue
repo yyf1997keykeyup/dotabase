@@ -52,6 +52,7 @@ export default {
     name: 'app',
     computed: mapState({
       mock: state => state.debug.config.mock,
+      token: state => state.login.user.token,
       getAllHeroApi: state => state.api.host + state.api.backend.operateHero,
     }),
     data() {
@@ -67,7 +68,13 @@ export default {
         var config = {
             useCredentails: true
         };
-        axios.get(this.getAllHeroApi, config)
+        // axios.get(this.getAllHeroApi, config)
+        axios({  
+          method: 'GET', 
+          url: this.getAllHeroApi, 
+          headers: {Authorization: this.token}, 
+          data: { config } 
+        })
         .then(response => {
             // console.log(response)
             this.heros = response.data

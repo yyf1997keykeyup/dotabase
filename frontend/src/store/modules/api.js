@@ -3,7 +3,7 @@ const state = {
     backend: {
         operateHero: "/api/dotabase/hero/",
         getLogByHeroId: "/api/dotabase/log/",
-        login: "/api/dotabase/login/",            // todo: modify the url
+        login: "/api/dotabase/user/get_token/",
     }
 }
 

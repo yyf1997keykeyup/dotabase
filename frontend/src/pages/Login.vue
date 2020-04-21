@@ -5,11 +5,11 @@
     <!-- Tabs Titles -->
 
     <!-- Login Form -->
-    <form @submit="onSubmit" v-if="show">
+    <a v-if="show">
       <input type="text" v-model="form.username" id="username" class="fadeIn second" name="username" placeholder="username">
       <input type="text" v-model="form.password" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
-    </form>
+      <input @click="loginSubmit" type="submit" class="fadeIn fourth" value="Log In">
+    </a>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
@@ -24,10 +24,12 @@
 <script>
   import MainLayout from '../layouts/Main.vue'
   import { mapState } from 'vuex' 
+  import axios from "axios";
 
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
+      token: state => state.login.user.token,
       loginApi: state => state.api.host + state.api.backend.login,
     }),
     data() {
@@ -41,21 +43,26 @@
       }
     },
     methods: {
-        onSubmit (evt) {
-            axios.post(this.loginApi, this.form)
+        loginSubmit (evt) {
+            // axios.post(this.loginApi, this.form)
+            var form = this.form
+            axios({  
+                method: 'POST', 
+                url: this.loginApi, 
+                // headers: {Authorization: this.token}, 
+                data: { username: form.username, password: form.password } })
             .then(response => {
                 // alert(JSON.stringify(this.form))
                 this.ret = response.data
-                if (this.ret.status === "OK") {  // todo: correct it, just for test
-                  this.$store.commit('login/loginRequest', {
-                    username: this.ret.username,
+                this.$store.commit('login/loginRequest', {
+                    username: form.username,
                     token: this.ret.token,
-                  })
-                  this.$router.push({name: "homepage"})
-                } else {
+                })
+                this.$router.push({name: "homepage"})
+            }, error => {
+              if (error.response.status === 400) {
                   alert("invalid username or password")
-                }
-                
+              }
             })
         }
     },

@@ -36,6 +36,7 @@
     export default {
         computed: mapState({
             mock: state => state.debug.config.mock,
+            token: state => state.login.user.token,
             getLogsApi: state => state.api.host + state.api.backend.getLogByHeroId
         }),
         components: {
@@ -55,12 +56,26 @@
                     useCredentails: true
                 };
                 // get hero info
-                axios.get(this.getLogsApi, config)
+                // axios.get(this.getLogsApi, config)
+                axios({  
+                    method: 'GET', 
+                    url: this.getLogsApi, 
+                    headers: {Authorization: this.token}, 
+                    data: { config } 
+                })
                 .then(response => {
                     this.logs = response.data
-                })
-                .catch(e => {
-                    this.errors.push(e)
+                }, error => {
+                    if (error.response.status === 401) {
+                        if (error.response.data.detail === "Authentication credentials were not provided.") {
+                            alert("Timeout! Please Login!")
+                            this.$store.commit('login/logoutRequest')
+                            this.$router.push({name: "login"})
+                        } else {
+                            alert("You don't have the authorization!")
+                            this.$router.push({name: "homepage"})
+                        }
+                    }
                 })
             }
         },

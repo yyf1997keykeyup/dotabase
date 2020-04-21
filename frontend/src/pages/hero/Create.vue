@@ -84,6 +84,7 @@
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
+      token: state => state.login.user.token,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
     }),
     data: function() {
@@ -105,13 +106,28 @@
     methods: {
         createRequest(evt) {
             if (!this.mock) {
-                axios.post(this.operateHeroApi, this.hero)
+                // axios.post(this.operateHeroApi, this.hero)
+                var hero = this.hero
+                axios({  
+                    method: 'POST', 
+                    url: this.operateHeroApi, 
+                    headers: {Authorization: this.token}, 
+                    data: hero
+                })
                 .then(response => {
                     alert("succeed to create!")
                     this.$router.push({name: "homepage"})
-                })
-                .catch(e => {
-                    this.errors.push(e)
+                }, error => {
+                    if (error.response.status === 401) {
+                    if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        this.$router.push({name: "homepage"})
+                    }
+                    }
                 })
             } else {
                 alert("succeed to create!")
