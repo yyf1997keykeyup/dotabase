@@ -13,7 +13,7 @@
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover">Forgot Password?</a>
     </div>
 
   </div>
@@ -42,7 +42,7 @@
                 username: this.form.username,
                 permission: {},
             })
-            this.$router.push({path: "/"})
+            this.$router.push({name: "homepage"})
         }
     },
     components: {

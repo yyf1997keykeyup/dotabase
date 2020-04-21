@@ -1,0 +1,9 @@
+{
+    "data": [
+        {"id": 1, "heroid": 1, "attr_health": "1800 at 25", "attr_damage": "120 at 25", "attr_mana": "900 at 25"},
+        {"id": 2, "heroid": 1, "attr_health": "12300 at 25", "attr_damage": "119 at 25", "attr_mana": "433 at 25"},
+        {"id": 3, "heroid": 1, "attr_health": "1300 at 25", "attr_damage": "123 at 25", "attr_mana": "443 at 25"},
+        {"id": 4, "heroid": 1, "attr_health": "13200 at 25", "attr_damage": "111 at 25", "attr_mana": "32 at 25"},
+        {"id": 5, "heroid": 1, "attr_health": "1320 at 25", "attr_damage": "111 at 25", "attr_mana": "901 at 25"}
+    ]
+}

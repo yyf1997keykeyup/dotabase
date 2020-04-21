@@ -40,7 +40,7 @@
             //     username: this.form.username,
             //     permission: {},
             // })
-            // this.$router.push({path: "/"})
+            // this.$router.push({name: "homepage"})
         }
     },
     components: {

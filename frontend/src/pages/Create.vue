@@ -1,13 +1,13 @@
 <template>
 <main-layout>
     <div class="container">
-    <div class="row align-items-center">
-        <div class="col-md-12 order-2 order-md-1">
-            <div class="p-4 contact-box rounded form-box">
-                <h4 class="m-0">Update a new version!</h4>
+<div class="row align-items-center">
+    <div class="col-md-12 order-2 order-md-1">
+                                <div class="p-4 contact-box rounded form-box">
+                                    <h4 class="m-0">Create a new Hero!</h4>
                                     <div class="custom-form">
                                         <div id="message"></div>
-                                        <a>
+                                        <form @submit="createRequest">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group position-relative">
@@ -24,19 +24,19 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Health </label>
-                                                        <input v-model="hero.attr_health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
+                                                        <input v-model="hero.health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Mana </label>
-                                                        <input v-model="hero.attr_mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
+                                                        <input v-model="hero.mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Damage </label>
-                                                        <input v-model="hero.attr_damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
+                                                        <input v-model="hero.damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
@@ -54,13 +54,11 @@
                                             </div><!--end row-->
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <a @click="updateRequest">
-                                                        <button name="send" class="btn btn-hover send-btn btn-block">UPDATE</button>
-                                                    </a>
+                                                    <input type="submit" name="send" class="btn btn-hover send-btn btn-block" value="Create!">
                                                     <div id="simple-msg"></div>
                                                 </div><!--end col-->
                                             </div><!--end row-->
-                                        </a><!--end form-->
+                                        </form><!--end form-->
                                     </div><!--end custom-form-->
                                 </div>
                             </div><!--end col-->
@@ -88,45 +86,35 @@
     }),
     data: function() {
       return {
-        hero: {},
+        hero: {
+            name: "",
+            type: "",
+            attr_health: "",
+            attr_mana: "",
+            attr_damage: "",
+            imageurl: "",
+            bio: "",
+        },
         errors: [],
       }
     },
     created() {
-        if (this.mock) {
-            this.hero = mockHeroData.data;
-        } else {
-            var config = {
-                useCredentails: true
-            };
-            axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
-            .then(response => {
-                this.hero = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
-        }
     },
     methods: {
-        updateRequest(evt) {
+        createRequest(evt) {
             if (!this.mock) {
-                var config = {
-                    useCredentails: true,
-                    data: this.hero
-                };
-                axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
+                axios.post(this.operateHeroApi + this.hero.id + `/`, this.hero)
                 .then(response => {
                     this.hero = response.data
-                    alert("succeed to update!")
-                    this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
+                    alert("succeed to create!")
+                    this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
             } else {
-                alert("succeed to update!")
-                this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
+                alert("succeed to create!")
+                this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
             }
         }
     },

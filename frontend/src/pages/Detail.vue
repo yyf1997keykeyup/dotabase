@@ -13,11 +13,11 @@
                         <div class="row">
                             <ul id="portfolio-filter" class="portfolio-filter filters">
                                 <li class="button-border list-inline-item">
-                                    <a href="#" class="pill-button active">Logging</a>
+                                    <a @click="exportRequest" class="pill-button">Export</a>
                                 </li>
-                                <router-link :to="{name: 'update', params: {'id': hero.id}}"> 
+                                <router-link :to="{name: 'update', params: {'heroid': hero.heroid}}"> 
                                     <li class="button-border list-inline-item">
-                                        <a href="#" class="pill-button">Update</a>
+                                        <a class="pill-button">Update</a>
                                     </li>
                                 </router-link>
                                 <li class="button-border list-inline-item">
@@ -35,7 +35,7 @@
                                   <div class="about-img-box">
                                     <div class="image">
                                         <img src="https://www.dotafire.com/images/skill/abaddon-mist-coil.png" class="img-fluid" alt="">
-                                        Mist Coil
+                                        example skill 1
                                     </div>
                                   </div>
                                 </div>
@@ -43,7 +43,7 @@
                                   <div class="about-img-box">
                                     <div class="image">
                                         <img src="https://www.dotafire.com/images/skill/abaddon-aphotic-shield.png" class="img-fluid" alt="">
-                                        Aphotic Shield
+                                        example skill 2
                                     </div>
                                   </div>
                                 </div>
@@ -51,7 +51,7 @@
                                   <div class="about-img-box">
                                     <div class="image">
                                         <img src="https://www.dotafire.com/images/skill/abaddon-curse-of-avernus.png" class="img-fluid" alt="">
-                                        Curse of Avernus
+                                        example skill 3
                                     </div>
                                   </div>
                                 </div>
@@ -59,46 +59,37 @@
                                   <div class="about-img-box">
                                     <div class="image">
                                         <img src="https://www.dotafire.com/images/skill/abaddon-borrowed-time.png" class="img-fluid" alt="">
-                                        Borrowed Time
+                                        example skill 4
                                     </div>
                                   </div>
                                 </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-4 col-6">
                                 <div class="counter-block">
                                     <span class="mdi mdi-fire"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.health }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_health }}</em></h3>
                                         <p class="mb-0">health</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-4 col-6">
                                 <div class="counter-block">
                                     <span class="mdi mdi-coffee-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.mana }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_mana }}</em></h3>
                                         <p class="mb-0">mana</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-4 col-6">
                                 <div class="counter-block">
                                     <span class="mdi mdi-account-multiple-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.damage }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>
                                         <p class="mb-0">damage</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="counter-block">
-                                    <span class="mdi mdi-trophy-outline"></span>
-                                    <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">10</em></h3>
-                                        <p class="mb-0">Nominees winner</p>
                                     </div>
                                 </div>
                             </div>
@@ -135,6 +126,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Modify Logging
+                                        </h4>
+                                        <ul>
+                                            <li v-for="log in logs" :key="log.id">
+                                                Health: {{ log.heath }}; Mana: {{ log.mana }}; Damage: {{ log.damage }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,9 +151,11 @@
 <script>
   import MainLayout from '../layouts/Main.vue'
   import { mapState } from 'vuex'
-  import axios from 'axios';
+  import axios from 'axios'
+  import FileSaver from 'file-saver'
 
   const mockHeroData = require("../mock/hero_detail.json");
+  const mockHeroLogData = require("../mock/hero_log.json");
 
   export default {
     computed: mapState({
@@ -158,20 +165,53 @@
     data: function() {
       return {
         hero: {},
+        logs: [],
         errors: [],
       }
     },
     created() {
         if (this.mock) {
             this.hero = mockHeroData.data;
+            this.logs = mockHeroLogData.data;
         } else {
-            axios.get(operateHeroApi + this.hero.id)
+            var config = {
+                useCredentails: true
+            };
+            axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
             .then(response => {
                 this.hero = response.data
             })
             .catch(e => {
                 this.errors.push(e)
             })
+        }
+    },
+    methods: {
+        deleteRequest(evt) {
+            var r=confirm("Are you sure to delete the hero?");
+            if (r==true)
+            {
+                if (!this.mock) {
+                    var config = {
+                        useCredentails: true
+                    };
+                    axios.delete(this.operateHeroApi + this.hero.id + "/", config)
+                    .then(response => {
+                        this.hero = response.data
+                        this.$router.push({name: "homepage"})
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+                } else {
+                    this.$router.push({name: "homepage"})
+                }
+                }
+        },
+        exportRequest(evt) {
+            const data = JSON.stringify(this.hero)
+            const blob = new Blob([data], {type: ''})
+            FileSaver.saveAs(blob, "Hero_" + this.hero.name + '.json')
         }
     },
     components: {
