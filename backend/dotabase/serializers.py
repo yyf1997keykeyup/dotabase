@@ -8,3 +8,8 @@ class HeroSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class LogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjHeroLog
+        fields = '__all__'
+
