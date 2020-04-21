@@ -30,6 +30,17 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
 
+    # def put(self, request, pk):
+    #     hero = ProjHero.objects.get(pk=pk)
+    #     serializer = HeroSerializer(hero, request.data)
+    #     if serializer.is_valid():
+    #         logger.info("valid hero update")
+    #         hero_log = ProjHeroLog(hero=hero, attr_damage=hero.attr_damage, attr_health=hero.attr_health, attr_maga=hero.attr_mana)
+    #         hero_log.save()
+    #         serializer.save()
+    #         return Response({'msg': 'update successful', 'state': True}, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response({'msg': 'add failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class UserRegister(generics.ListCreateAPIView):
@@ -39,9 +50,20 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
 #     filter_class = UserFilter
 #     search_fields = ('name', 'password',)
 
-class LogRegister(generics.ListAPIView):
+class LogList(generics.ListAPIView):
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = LogFilter
+    search_fields = ('attr_damage', 'attr_maga', 'attr_health', )
+
+class LogUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ProjHeroLog.objects.all()
+    serializer_class = LogSerializer
+
+# class LogRegister(generics.ListAPIView):
+#     queryset = ProjHeroLog.objects.all()
+#     serializer_class = LogSerializer
 
 
 class Login(generics.ListCreateAPIView):

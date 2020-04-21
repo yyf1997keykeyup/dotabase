@@ -24,7 +24,8 @@ class LogFilter(django_filters.rest_framework.FilterSet):
     #id = django_filters.CharFilter(field_name="logid")
     health = django_filters.CharFilter(field_name="attr_health")
     damage = django_filters.CharFilter(field_name="attr_damage")
+    mana = django_filters.CharFilter(field_name="attr_maga")
 
     class Meta:
         model = ProjHeroLog
-        fields = ['attr_health', 'attr_damage']
+        fields = ['attr_health', 'attr_damage', 'attr_maga']
