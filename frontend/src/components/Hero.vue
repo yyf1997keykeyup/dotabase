@@ -5,7 +5,7 @@
                 <img :src="image" class="img-fluid" alt="">
                 <div class="img-overlay text-center">
                     <div class="portfolio-icon">
-                        <router-link :to="{name: 'detail', params: {'heroid': id}}">
+                        <router-link :to="{name: 'hero_detail', params: {'heroid': id}}">
                             <a class="js-zoom-gallery">
                                 <i class="mdi mdi-magnify-plus-outline"></i>
                             </a>

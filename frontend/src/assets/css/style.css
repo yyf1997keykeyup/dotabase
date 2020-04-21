@@ -190,11 +190,6 @@ header .navbar-brand b {
     font-size: 3rem;
 }
 /*==========================
-<<<<<<< HEAD
-=======
->>>>>>> better UI
-=======
->>>>>>> optimize the navigator & some UI
         6.ABOUT US
 ============================*/
 .line-vector {
@@ -254,11 +249,7 @@ header .navbar-brand b {
 
     .counter-block .number em {
         font-style: normal;
-<<<<<<< HEAD
         font-size: 50px;
-=======
-        font-size: 60px;
->>>>>>> better UI
         color: #333743;
         font-weight: 700;
     }
@@ -463,11 +454,3 @@ header .navbar-brand b {
 
     .copy-right b {
         color: #FF9E2B;
-<<<<<<< HEAD
-    }
-=======
-}
->>>>>>> better UI
-=======
-    }
->>>>>>> frontend: update form

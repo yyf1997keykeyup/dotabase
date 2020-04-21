@@ -15,7 +15,7 @@
                                 <li class="button-border list-inline-item">
                                     <a @click="exportRequest" class="pill-button">Export</a>
                                 </li>
-                                <router-link :to="{name: 'update', params: {'heroid': hero.heroid}}"> 
+                                <router-link :to="{name: 'hero_update', params: {'heroid': hero.heroid}}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Update</a>
                                     </li>
@@ -88,7 +88,7 @@
                                 <div class="counter-block">
                                     <span class="mdi mdi-account-multiple-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>better UI
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>
                                         <p class="mb-0">damage</p>
                                     </div>
                                 </div>
@@ -133,8 +133,8 @@
                                             Modify Logging
                                         </h4>
                                         <ul>
-                                            <li v-for="log in logs" :key="log.id">
-                                                Health: {{ log.heath }}; Mana: {{ log.mana }}; Damage: {{ log.damage }}
+                                            <li v-for="log in logs" :key="log.logid">
+                                                Health: {{ log.attr_heath }}; Mana: {{ log.attr_mana }}; Damage: {{ log.attr_damage }}; Create Time: {{ log.create_time }}
                                             </li>
                                         </ul>
                                     </div>
@@ -149,17 +149,18 @@
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '../../layouts/Main.vue'
   import { mapState } from 'vuex'
   import axios from 'axios'
   import FileSaver from 'file-saver'
-  const mockHeroData = require("../mock/hero_detail.json");
-  const mockHeroLogData = require("../mock/hero_log.json");
+  const mockHeroData = require("../../mock/hero_detail.json");
+  const mockHeroLogData = require("../../mock/hero_log.json");
 
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
+      getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId
     }),
     data: function() {
       return {
@@ -176,9 +177,18 @@
             var config = {
                 useCredentails: true
             };
+            // get hero info
             axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
             .then(response => {
                 this.hero = response.data
+            })
+            .catch(e => {
+                this.errors.push(e)
+            })
+            // get hero log info
+            axios.get(this.getLogByHeroIdApi + this.$route.params.heroid + "/", config)
+            .then(response => {
+                this.logs = response.data
             })
             .catch(e => {
                 this.errors.push(e)
