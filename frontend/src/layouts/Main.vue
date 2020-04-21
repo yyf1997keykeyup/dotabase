@@ -2,7 +2,7 @@
 <div>
 <header>
             <div class="header-navbar h-100">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand">
                   <router-link :to="{name: 'homepage', params: {}}">
                     <div class="row mb-3">
                         <img style="width:80px;position: absolute;right:-0px;" :src="icon_url"/>

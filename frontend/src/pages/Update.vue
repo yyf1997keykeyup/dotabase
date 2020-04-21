@@ -24,19 +24,19 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Health </label>
-                                                        <input v-model="hero.health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
+                                                        <input v-model="hero.attr_health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Mana </label>
-                                                        <input v-model="hero.mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
+                                                        <input v-model="hero.attr_mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Damage </label>
-                                                        <input v-model="hero.damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
+                                                        <input v-model="hero.attr_damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
@@ -96,7 +96,10 @@
         if (this.mock) {
             this.hero = mockHeroData.data;
         } else {
-            axios.get(operateHeroApi + `/` + this.hero.id)
+            var config = {
+                useCredentails: true
+            };
+            axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
             .then(response => {
                 this.hero = response.data
             })
@@ -112,16 +115,19 @@
                     useCredentails: true,
                     data: this.hero
                 };
-                axios.put(operateHeroApi + `/` + this.hero.id, config)
+                axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
                 .then(response => {
                     this.hero = response.data
+                    alert("succeed to update!")
+                    this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
+            } else {
+                alert("succeed to update!")
+                this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
             }
-            alert("succeed to update!")
-            this.$router.push({path: "/detail", param: {"id": this.hero.id}})
         }
     },
     components: {

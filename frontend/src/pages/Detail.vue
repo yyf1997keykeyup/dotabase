@@ -15,7 +15,7 @@
                                 <li class="button-border list-inline-item">
                                     <a @click="exportRequest" class="pill-button">Export</a>
                                 </li>
-                                <router-link :to="{name: 'update', params: {'id': hero.id}}"> 
+                                <router-link :to="{name: 'update', params: {'heroid': hero.heroid}}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Update</a>
                                     </li>
@@ -70,7 +70,7 @@
                                 <div class="counter-block">
                                     <span class="mdi mdi-fire"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.health }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_health }}</em></h3>
                                         <p class="mb-0">health</p>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 <div class="counter-block">
                                     <span class="mdi mdi-coffee-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.mana }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_mana }}</em></h3>
                                         <p class="mb-0">mana</p>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                 <div class="counter-block">
                                     <span class="mdi mdi-account-multiple-outline"></span>
                                     <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.damage }}</em></h3>
+                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ hero.attr_damage }}</em></h3>
                                         <p class="mb-0">damage</p>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
             var config = {
                 useCredentails: true
             };
-            axios.get(operateHeroApi + this.hero.id + "/", config)
+            axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
             .then(response => {
                 this.hero = response.data
             })
@@ -195,15 +195,17 @@
                     var config = {
                         useCredentails: true
                     };
-                    axios.delete(operateHeroApi + `/` + this.hero.id + "/", config)
+                    axios.delete(this.operateHeroApi + this.hero.id + "/", config)
                     .then(response => {
                         this.hero = response.data
+                        this.$router.push({name: "homepage"})
                     })
                     .catch(e => {
                         this.errors.push(e)
                     })
+                } else {
+                    this.$router.push({name: "homepage"})
                 }
-                this.$router.push({path: "/"})
                 }
         },
         exportRequest(evt) {

@@ -54,7 +54,7 @@
                                             </div><!--end row-->
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <input type="submit" name="send" class="btn btn-hover send-btn btn-block" value="Update!">
+                                                    <input type="submit" name="send" class="btn btn-hover send-btn btn-block" value="Create!">
                                                     <div id="simple-msg"></div>
                                                 </div><!--end col-->
                                             </div><!--end row-->
@@ -89,9 +89,9 @@
         hero: {
             name: "",
             type: "",
-            health: "",
-            mana: "",
-            damage: "",
+            attr_health: "",
+            attr_mana: "",
+            attr_damage: "",
             imageurl: "",
             bio: "",
         },
@@ -103,22 +103,18 @@
     methods: {
         createRequest(evt) {
             if (!this.mock) {
-                var config = {
-                    useCredentails: true,
-                    data: this.hero
-                };
-                axios.post(operateHeroApi + `/` + this.hero.id, config)
+                axios.post(this.operateHeroApi + this.hero.id + `/`, this.hero)
                 .then(response => {
                     this.hero = response.data
                     alert("succeed to create!")
-                    this.$router.push({path: "/detail", param: {"id": this.hero.id}})
+                    this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
             } else {
                 alert("succeed to create!")
-                this.$router.push({path: "/detail", param: {"id": this.hero.id}})
+                this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
             }
         }
     },

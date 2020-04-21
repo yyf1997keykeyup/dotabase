@@ -11,8 +11,8 @@ import Create from './pages/Create'
 
 const routes = [
   { path: '/', name: 'homepage', component: Home },
-  { path: '/detail', name: 'detail', component: Detail },
-  { path: '/update', name: 'update', component: Update},
+  { path: '/detail/:heroid', name: 'detail', component: Detail },
+  { path: '/update/:heroid', name: 'update', component: Update},
   { path: '/create', name: 'create', component: Create},
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register},
