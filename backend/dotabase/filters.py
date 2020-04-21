@@ -10,3 +10,19 @@ class HeroFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = ProjHero
         fields = ['name', 'bio',]
+
+
+class UserFilter(django_filters.rest_framework.FilterSet):
+    name = django_filters.CharFilter(field_name="username")
+    password = django_filters.CharFilter(field_name="password")
+
+    class Meta:
+        model = AuthUser
+        fields = ['username', 'password',]
+
+class LogFilter(django_filters.rest_framework.FilterSet):
+    id = django_filters.CharFilter(field_name="hero_id")
+
+    class Meta:
+        model = ProjHeroLog
+        fields = ['hero_id']

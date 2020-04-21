@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/dotabase/', include('dotabase.urls')),
-    path('api/register/', include('register.urls'))
-
+    path('api/register/', include('dotabase.urls')),
+    path('api/herolog/', include('dotabase.urls'))
 ]
 
