@@ -17,12 +17,14 @@ class UserFilter(django_filters.rest_framework.FilterSet):
     password = django_filters.CharFilter(field_name="password")
 
     class Meta:
-        model = AuthUser
+        model = Authuser
         fields = ['username', 'password',]
 
 class LogFilter(django_filters.rest_framework.FilterSet):
-    id = django_filters.CharFilter(field_name="hero_id")
+    #id = django_filters.CharFilter(field_name="logid")
+    health = django_filters.CharFilter(field_name="attr_health")
+    damage = django_filters.CharFilter(field_name="attr_damage")
 
     class Meta:
         model = ProjHeroLog
-        fields = ['hero_id']
+        fields = ['attr_health', 'attr_damage']

@@ -9,11 +9,11 @@ class HeroSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AuthUser
+        model = Authuser
         fields = '__all__'
 
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AuthUser
+        model = ProjHeroLog
         fields = '__all__'
 

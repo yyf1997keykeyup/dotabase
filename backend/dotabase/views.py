@@ -24,13 +24,13 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserRegister(generics.ListCreateAPIView):
-    queryset = AuthUser.objects.all()
+    queryset = Authuser.objects.all()
     serializer_class = UserSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = UserFilter
     search_fields = ('name', 'password',)
 
-class LogRegister(generics.RetrieveUpdateDestroyAPIView):
+class LogRegister(generics.ListCreateAPIView):
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
 
