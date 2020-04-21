@@ -18,8 +18,11 @@ from django.urls import path
 from django.urls import path,include
 from top import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/dotabase/', include('dotabase.urls'))
+    path('api/dotabase/', include('dotabase.urls')),
+    path('api/register/', include('register.urls'))
+
 ]
 
