@@ -187,7 +187,7 @@
                 this.errors.push(e)
             })
             // get hero log info
-            axios.get(this.getLogByHeroIdApi + this.$route.params.heroid + "/", config)
+            axios.get(this.getLogByHeroIdApi + "/" + this.$route.params.heroid + "/", config)
             .then(response => {
                 this.logs = response.data
             })
@@ -205,7 +205,7 @@
                     var config = {
                         useCredentails: true
                     };
-                    axios.delete(this.operateHeroApi + this.hero.id + "/", config)
+                    axios.delete(this.operateHeroApi + this.hero.heroid + "/", config)
                     .then(response => {
                         this.hero = response.data
                         this.$router.push({name: "homepage"})

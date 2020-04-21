@@ -12,6 +12,11 @@
                         </div>
                         <div class="row">
                             <ul id="portfolio-filter" class="portfolio-filter filters">
+                              <router-link :to="{name: 'hero_logs'}"> 
+                                <li class="button-border list-inline-item">
+                                    <a class="pill-button">All Hero Logs</a>
+                                </li>
+                                </router-link>
                                 <li class="button-border list-inline-item">
                                     <a @click="exportAllHerosRequest" class="pill-button">Export All Heros</a>
                                 </li>

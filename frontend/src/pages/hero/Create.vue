@@ -7,7 +7,7 @@
                                     <h4 class="m-0">Create a new Hero!</h4>
                                     <div class="custom-form">
                                         <div id="message"></div>
-                                        <form @submit="createRequest">
+                                        <a>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group position-relative">
@@ -24,19 +24,19 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Health </label>
-                                                        <input v-model="hero.health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
+                                                        <input v-model="hero.attr_health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Mana </label>
-                                                        <input v-model="hero.mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
+                                                        <input v-model="hero.attr_mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-3">
                                                     <div class="form-group position-relative">
                                                         <label> Damage </label>
-                                                        <input v-model="hero.damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
+                                                        <input v-model="hero.attr_damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
@@ -54,11 +54,13 @@
                                             </div><!--end row-->
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <input type="submit" name="send" class="btn btn-hover send-btn btn-block" value="Create!">
+                                                    <a @click="createRequest">
+                                                        <button name="send" class="btn btn-hover send-btn btn-block">CREATE</button>
+                                                    </a>                                                    
                                                     <div id="simple-msg"></div>
                                                 </div><!--end col-->
                                             </div><!--end row-->
-                                        </form><!--end form-->
+                                        </a><!--end form-->
                                     </div><!--end custom-form-->
                                 </div>
                             </div><!--end col-->
@@ -103,18 +105,17 @@
     methods: {
         createRequest(evt) {
             if (!this.mock) {
-                axios.post(this.operateHeroApi + this.hero.id + `/`, this.hero)
+                axios.post(this.operateHeroApi, this.hero)
                 .then(response => {
-                    this.hero = response.data
                     alert("succeed to create!")
-                    this.$router.push({name: "hero_detail", param: {"id": this.hero.heroid}})
+                    this.$router.push({name: "homepage"})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
             } else {
                 alert("succeed to create!")
-                this.$router.push({name: "hero_detail", param: {"id": this.hero.heroid}})
+                this.$router.push({name: "hero_detail", param: {heroid: response.data.heroid}})
             }
         }
     },
