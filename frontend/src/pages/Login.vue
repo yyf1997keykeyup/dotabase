@@ -23,26 +23,40 @@
 
 <script>
   import MainLayout from '../layouts/Main.vue'
+  import { mapState } from 'vuex' 
 
   export default {
+    computed: mapState({
+      mock: state => state.debug.config.mock,
+      loginApi: state => state.api.host + state.api.backend.login,
+    }),
     data() {
       return {
         form: {
           username: '',
           password: '',
         },
+        ret: {},
         show: true
       }
     },
     methods: {
         onSubmit (evt) {
-            evt.preventDefault()
-            // alert(JSON.stringify(this.form))
-            this.$store.commit('login/loginRequest', {
-                username: this.form.username,
-                permission: {},
+            axios.post(this.loginApi, this.form)
+            .then(response => {
+                // alert(JSON.stringify(this.form))
+                this.ret = response.data
+                if (this.ret.status === "OK") {  // todo: correct it, just for test
+                  this.$store.commit('login/loginRequest', {
+                    username: this.ret.username,
+                    token: this.ret.token,
+                  })
+                  this.$router.push({name: "homepage"})
+                } else {
+                  alert("invalid username or password")
+                }
+                
             })
-            this.$router.push({name: "homepage"})
         }
     },
     components: {

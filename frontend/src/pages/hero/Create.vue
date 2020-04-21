@@ -1,10 +1,10 @@
 <template>
 <main-layout>
     <div class="container">
-    <div class="row align-items-center">
-        <div class="col-md-12 order-2 order-md-1">
-            <div class="p-4 contact-box rounded form-box">
-                <h4 class="m-0">Update a new version!</h4>
+<div class="row align-items-center">
+    <div class="col-md-12 order-2 order-md-1">
+                                <div class="p-4 contact-box rounded form-box">
+                                    <h4 class="m-0">Create a new Hero!</h4>
                                     <div class="custom-form">
                                         <div id="message"></div>
                                         <a>
@@ -54,9 +54,9 @@
                                             </div><!--end row-->
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <a @click="updateRequest">
-                                                        <button name="send" class="btn btn-hover send-btn btn-block">UPDATE</button>
-                                                    </a>
+                                                    <a @click="createRequest">
+                                                        <button name="send" class="btn btn-hover send-btn btn-block">CREATE</button>
+                                                    </a>                                                    
                                                     <div id="simple-msg"></div>
                                                 </div><!--end col-->
                                             </div><!--end row-->
@@ -75,11 +75,11 @@
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '../../layouts/Main.vue'
   import axios from 'axios';
   import { mapState } from 'vuex'
 
-  const mockHeroData = require("../mock/hero_detail.json");
+  const mockHeroData = require("../../mock/hero_detail.json");
 
   export default {
     computed: mapState({
@@ -88,45 +88,34 @@
     }),
     data: function() {
       return {
-        hero: {},
+        hero: {
+            name: "",
+            type: "",
+            attr_health: "",
+            attr_mana: "",
+            attr_damage: "",
+            imageurl: "",
+            bio: "",
+        },
         errors: [],
       }
     },
     created() {
-        if (this.mock) {
-            this.hero = mockHeroData.data;
-        } else {
-            var config = {
-                useCredentails: true
-            };
-            axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
-            .then(response => {
-                this.hero = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
-        }
     },
     methods: {
-        updateRequest(evt) {
+        createRequest(evt) {
             if (!this.mock) {
-                var config = {
-                    useCredentails: true,
-                    data: this.hero
-                };
-                axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
+                axios.post(this.operateHeroApi, this.hero)
                 .then(response => {
-                    this.hero = response.data
-                    alert("succeed to update!")
-                    this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
+                    alert("succeed to create!")
+                    this.$router.push({name: "homepage"})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
             } else {
-                alert("succeed to update!")
-                this.$router.push({name: "detail", param: {heroid: this.hero.heroid}})
+                alert("succeed to create!")
+                this.$router.push({name: "hero_detail", param: {heroid: response.data.heroid}})
             }
         }
     },
