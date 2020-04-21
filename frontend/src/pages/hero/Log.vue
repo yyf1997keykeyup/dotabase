@@ -8,14 +8,14 @@
                         </div>
         <table style="position:absolute; left:100px">
             <tr>
-                <th>hero id</th>
+                <th>hero name</th>
                 <th>health</th>
                 <th>mana</th>
                 <th>damage</th>
                 <th>create time</th>
             </tr>
             <tr v-for="log in logs" :key="log.logid">
-                <th>{{log.hero}}</th>
+                <th>{{log.hero_name}}</th>
                 <th>{{log.attr_health}}</th>
                 <th>{{log.attr_maga}}</th>
                 <th>{{log.attr_damage}}</th>

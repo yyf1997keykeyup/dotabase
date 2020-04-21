@@ -10,25 +10,29 @@
                                 <h2><span>All Items!!!</span></h2>
                             </div>
                         </div>
+                        <div class="position-relative">
+                            <label> Item Search... </label>
+                            <input v-model="searchName" name="searchName" id="searchName" type="text" placeholder="Search for your item...">
+                        </div>
                         <div class="row">
                             <ul id="portfolio-filter" class="portfolio-filter filters">
                                 <li class="button-border list-inline-item">
                                     <a @click="exportAllItemsRequest" class="pill-button">Export All Items</a>
                                 </li>
-                                <router-link :to="{name: 'item_create'}"> 
+                                <!-- <router-link :to="{name: 'item_create'}">  -->
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Create a New Item</a>
                                     </li>
-                                </router-link>
+                                <!-- </router-link> -->
                             </ul>
                         </div>
                         <div class="portfolio-items row">
-                          <Hero
+                          <Item
                           v-for="item in items"
-                          :key="item.itemid"
-                          :id="item.itemid"
-                          :name="item.name"
-                          :image="item.imageurl"></Hero>
+                          :key="item.item_id"
+                          :id="item.item_id"
+                          :name="item.item_name"
+                          :image="item.img_url"></Item>
                         </div>
                     </div>
                 </div>
@@ -39,45 +43,60 @@
 </template>
 
 <script>
-import Hero from '../../components/Hero';
+import Item from '../../components/Item';
 import { mapState } from 'vuex'
 import MainLayout from '../../layouts/Main.vue'
 import axios from "axios";
 import FileSaver from 'file-saver'
 
-
-const mockHerosData = require("../../mock/heros.json");
+const mockItemsData = require("../../mock/items.json");
 
 export default {
-    name: 'app',
+    name: 'item_list',
     computed: mapState({
       mock: state => state.debug.config.mock,
       token: state => state.login.user.token,
-      getAllHeroApi: state => state.api.host + state.api.backend.operateHero,
+      getAllItemApi: state => state.api.host + state.api.backend.operateItem,
     }),
     data() {
       return {
-        heros: [],
+        searchName: "",
+        items: [],
+        allItems: [],
         errors: [],
       };
     },
+    watch: {
+      searchName: function (val) {
+        if (val === "") {
+          this.items = this.allItems
+        } else {
+          this.items = []
+          for (var i=0; i<this.allItems.length; i++) {
+            if (this.allItems[i].item_name.indexOf(val) > -1) {
+              this.items.push(this.allItems[i])
+            }
+          }
+        }
+      }
+    },
     created() {
       if (this.mock) {
-        this.heros = mockHerosData.data;
+        this.items = mockItemsData.data;
+        this.allItems = mockItemsData.data;
       } else {
         var config = {
             useCredentails: true
         };
-        // axios.get(this.getAllHeroApi, config)
         axios({  
           method: 'GET', 
-          url: this.getAllHeroApi, 
+          url: this.getAllItemApi, 
           headers: {Authorization: this.token}, 
           data: { config } 
         })
         .then(response => {
-            // console.log(response)
-            this.heros = response.data
+            this.items = response.data
+            this.allItems = response.data
         })
         .catch(e => {
             this.errors.push(e)
@@ -85,14 +104,14 @@ export default {
       } 
     },
     methods: {
-        exportAllHerosRequest(evt) {
-            const data = JSON.stringify(this.heros)
+        exportAllItemsRequest(evt) {
+            const data = JSON.stringify(this.items)
             const blob = new Blob([data], {type: ''})
-            FileSaver.saveAs(blob, 'AllHeros.json')
+            FileSaver.saveAs(blob, 'AllItems.json')
         }
     },
     components: {
-        Hero,
+        Item,
         MainLayout,
     },
 };

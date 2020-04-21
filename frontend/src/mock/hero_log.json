@@ -1,9 +1,9 @@
 {
     "data": [
-        {"logid": 1, "hero": 1, "attr_health": "1800 at 25", "attr_damage": "120 at 25", "attr_mana": "900 at 25", "create_time": "2020-04-21T03:07:05Z"},
-        {"logid": 2, "hero": 1, "attr_health": "12300 at 25", "attr_damage": "119 at 25", "attr_mana": "433 at 25", "create_time": "2020-04-21T03:07:05Z"},
-        {"logid": 3, "hero": 1, "attr_health": "1300 at 25", "attr_damage": "123 at 25", "attr_mana": "443 at 25", "create_time": "2020-04-21T03:07:05Z"},
-        {"logid": 4, "hero": 1, "attr_health": "13200 at 25", "attr_damage": "111 at 25", "attr_mana": "32 at 25", "create_time": "2020-04-21T03:07:05Z"},
-        {"logid": 5, "hero": 1, "attr_health": "1320 at 25", "attr_damage": "111 at 25", "attr_mana": "901 at 25", "create_time": "2020-04-21T03:07:05Z"}
+        {"logid": 1, "hero_name": "Sven", "attr_health": "1800 at 25", "attr_damage": "120 at 25", "attr_maga": "900 at 25", "create_time": "2020-04-21T03:07:05Z"},
+        {"logid": 2, "hero_name": "Sven", "attr_health": "12300 at 25", "attr_damage": "119 at 25", "attr_maga": "433 at 25", "create_time": "2020-04-21T03:07:05Z"},
+        {"logid": 3, "hero_name": "Sven", "attr_health": "1300 at 25", "attr_damage": "123 at 25", "attr_maga": "443 at 25", "create_time": "2020-04-21T03:07:05Z"},
+        {"logid": 4, "hero_name": "Sven", "attr_health": "13200 at 25", "attr_damage": "111 at 25", "attr_maga": "32 at 25", "create_time": "2020-04-21T03:07:05Z"},
+        {"logid": 5, "hero_name": "Sven", "attr_health": "1320 at 25", "attr_damage": "111 at 25", "attr_maga": "901 at 25", "create_time": "2020-04-21T03:07:05Z"}
     ]
 }

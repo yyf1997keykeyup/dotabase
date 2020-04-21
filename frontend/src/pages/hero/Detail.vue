@@ -132,11 +132,20 @@
                                         <h4>
                                             Modify Logging
                                         </h4>
-                                        <ul>
-                                            <li v-for="log in logs" :key="log.logid">
-                                                Health: {{ log.attr_heath }}; Mana: {{ log.attr_mana }}; Damage: {{ log.attr_damage }}; Create Time: {{ log.create_time }}
-                                            </li>
-                                        </ul>
+                                        <table style="position:absolute; left:30px">
+                                            <tr>
+                                                <th>Health</th>
+                                                <th>Mana</th>
+                                                <th>Damage</th>
+                                                <th>Modify Time</th>
+                                            </tr>
+                                            <tr v-for="log in logs" :key="log.logid">
+                                                <th>{{log.attr_health}}</th>
+                                                <th>{{log.attr_maga}}</th>
+                                                <th>{{log.attr_damage}}</th>
+                                                <th>{{log.create_time}}</th>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +189,6 @@
                 useCredentails: true
             };
             // get hero info
-            // axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
             axios({  
                 method: 'GET', 
                 url: this.operateHeroApi + this.$route.params.heroid + "/", 
@@ -201,12 +209,10 @@
                 }
             })
             // get hero log info
-            // axios.get(this.getLogByHeroIdApi + "/" + this.$route.params.heroid + "/", config)
             axios({  
                 method: 'GET', 
-                url: this.getLogByHeroIdApi + this.$route.params.heroid + "/",
+                url: this.getLogByHeroIdApi + "?hero=" + this.$route.params.heroid,
                 headers: {Authorization: this.token}, 
-                data: { config }
             })
             .then(response => {
                 this.logs = response.data
@@ -271,3 +277,21 @@
     }
   }
 </script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>

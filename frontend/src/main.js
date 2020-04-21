@@ -9,7 +9,8 @@ import HeroUpdate from './pages/hero/Update.vue'
 import HeroCreate from './pages/hero/Create.vue'
 import HeroLog from './pages/hero/Log.vue'
 
-import ItemHome from './pages/Item/ItemList.vue'
+import ItemList from './pages/item/ItemList.vue'
+import ItemDetail from './pages/item/Detail.vue'
 
 import Login from './pages/Login.vue'
 import Register from './pages/Register.vue'
@@ -22,7 +23,8 @@ const routes = [
   { path: '/hero/create', name: 'hero_create', component: HeroCreate, props: true},
   { path: '/hero/log', name: 'hero_logs', component: HeroLog, props: true},
 
-  { path: '/item', name: 'item', component: ItemHome, props: true},
+  { path: '/item', name: 'item_list', component: ItemList, props: true},
+  { path: '/item/query/:heroid', name: 'item_detail', component: ItemDetail , props: true},
 
   { path: '/login', name: 'login', component: Login , props: true},
   { path: '/register', name: 'register', component: Register, props: true},
