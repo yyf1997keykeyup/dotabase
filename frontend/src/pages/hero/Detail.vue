@@ -96,21 +96,21 @@
                             <div class="row">
                             <div class="col-lg-4 col-md-6">
                                 <div class="expert-box text-center">
-                                    <img src="http://www.peis.in/templates/halman/images/aboutus/01.svg" class="img-fluid" alt="" />
+                                    <img src="https://www.dotafire.com/images/hero/icon/sven.png" class="img-fluid" alt="" />
                                     <h3>Best Against</h3>
                                     <p class="mb-0">hahahaha hahah hahahhaa hahahha hahhaha</p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="expert-box text-center">
-                                    <img src="http://www.peis.in/templates/halman/images/aboutus/02.svg" class="img-fluid" alt="" />
+                                    <img src="https://www.dotafire.com/images/hero/icon/anti-mage.png" class="img-fluid" alt="" />
                                     <h3>Bad Against</h3>
                                     <p class="mb-0">hahahaha hahah hahahh ahahah haha hhaha</p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="expert-box text-center">
-                                    <img src="http://www.peis.in/templates/halman/images/aboutus/03.svg" class="img-fluid" alt="" />
+                                    <img src="https://www.dotafire.com/images/hero/icon/phantom-assassin.png" class="img-fluid" alt="" />
                                     <h3>Best Combo</h3>
                                     <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
                                 </div>
@@ -160,6 +160,7 @@
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
+      token: state => state.login.user.token,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
       getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId
     }),
@@ -179,20 +180,47 @@
                 useCredentails: true
             };
             // get hero info
-            axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
-            .then(response => {
+            // axios.get(this.operateHeroApi + this.$route.params.heroid + "/", config)
+            axios({  
+                method: 'GET', 
+                url: this.operateHeroApi + this.$route.params.heroid + "/", 
+                headers: {Authorization: this.token}, 
+                data: { config } 
+            }).then(response => {
                 this.hero = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
+            }, error => {
+                if (error.response.status === 401) {
+                    if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        this.$router.push({name: "homepage"})
+                    }
+                }
             })
             // get hero log info
-            axios.get(this.getLogByHeroIdApi + "/" + this.$route.params.heroid + "/", config)
+            // axios.get(this.getLogByHeroIdApi + "/" + this.$route.params.heroid + "/", config)
+            axios({  
+                method: 'GET', 
+                url: this.getLogByHeroIdApi + this.$route.params.heroid + "/",
+                headers: {Authorization: this.token}, 
+                data: { config }
+            })
             .then(response => {
                 this.logs = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
+            }, error => {
+                if (error.response.status === 401) {
+                    if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        this.$router.push({name: "homepage"})
+                    }
+                }
             })
         }
     },
@@ -205,13 +233,27 @@
                     var config = {
                         useCredentails: true
                     };
-                    axios.delete(this.operateHeroApi + this.hero.heroid + "/", config)
+                    // axios.delete(this.operateHeroApi + this.hero.heroid + "/", config)
+                    axios({  
+                        method: 'DELETE', 
+                        url: this.operateHeroApi + this.hero.heroid + "/",
+                        headers: {Authorization: this.token}, 
+                        data: { config }
+                    })
                     .then(response => {
                         this.hero = response.data
                         this.$router.push({name: "homepage"})
-                    })
-                    .catch(e => {
-                        this.errors.push(e)
+                    }, error => {
+                        if (error.response.status === 401) {
+                            if (error.response.data.detail === "Authentication credentials were not provided.") {
+                                alert("Timeout! Please Login!")
+                                this.$store.commit('login/logoutRequest')
+                                this.$router.push({name: "login"})
+                            } else {
+                                alert("You don't have the authorization!")
+                                this.$router.push({name: "homepage"})
+                            }
+                        }
                     })
                 } else {
                     this.$router.push({name: "homepage"})

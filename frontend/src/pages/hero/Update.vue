@@ -84,6 +84,7 @@
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
+      token: state => state.login.user.token,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
     }),
     data: function() {
@@ -99,30 +100,55 @@
             var config = {
                 useCredentails: true
             };
-            axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
+            // axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
+            axios({  
+                method: 'GET', 
+                url: this.operateHeroApi + this.$route.params.heroid + `/`, 
+                headers: {Authorization: this.token}, 
+                data: { config } 
+            })
             .then(response => {
                 this.hero = response.data
-            })
-            .catch(e => {
-                this.errors.push(e)
+            }, error => {
+                if (error.response.status === 401) {
+                    if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        this.$router.push({name: "homepage"})
+                    }
+                }
             })
         }
     },
     methods: {
         updateRequest(evt) {
             if (!this.mock) {
-                var config = {
-                    useCredentails: true,
-                    data: this.hero
-                };
-                axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
+                // axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
+                var hero = this.hero
+                axios({  
+                    method: 'PUT', 
+                    url: this.operateHeroApi + this.hero.heroid + `/`, 
+                    headers: {Authorization: this.token}, 
+                    data: hero
+                })
                 .then(response => {
                     this.hero = response.data
                     alert("succeed to update!")
                     this.$router.push({name: "hero_detail", param: {heroid: this.hero.heroid}})
-                })
-                .catch(e => {
-                    this.errors.push(e)
+                }, error => {
+                    if (error.response.status === 401) {
+                        if (error.response.data.detail === "Authentication credentials were not provided.") {
+                            alert("Timeout! Please Login!")
+                            this.$store.commit('login/logoutRequest')
+                            this.$router.push({name: "login"})
+                        } else {
+                            alert("You don't have the authorization!")
+                            this.$router.push({name: "homepage"})
+                        }
+                    }
                 })
             } else {
                 alert("succeed to update!")
