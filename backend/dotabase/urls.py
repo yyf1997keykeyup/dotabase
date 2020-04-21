@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^hero/$', HeroList.as_view()),
     url(r'^hero/(?P<pk>[0-9]+)/$', HeroUpdate.as_view()),
     url(r'^user/$', UserRegister.as_view()),
-    url(r'^log/(?P<pk>[0-9]+)/$', LogRegister.as_view()),
+    url(r'^log/$', LogRegister.as_view()),
 ]

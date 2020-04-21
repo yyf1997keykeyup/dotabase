@@ -30,7 +30,7 @@ class UserRegister(generics.ListCreateAPIView):
     filter_class = UserFilter
     search_fields = ('name', 'password',)
 
-class LogRegister(generics.ListCreateAPIView):
+class LogRegister(generics.ListAPIView):
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
 
