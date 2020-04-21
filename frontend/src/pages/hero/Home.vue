@@ -15,7 +15,7 @@
                                 <li class="button-border list-inline-item">
                                     <a @click="exportAllHerosRequest" class="pill-button">Export All Heros</a>
                                 </li>
-                                <router-link :to="{name: 'create'}"> 
+                                <router-link :to="{name: 'hero_create'}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Create a New Hero</a>
                                     </li>
@@ -39,14 +39,14 @@
 </template>
 
 <script>
-import Hero from '../components/Hero';
+import Hero from '../../components/Hero';
 import { mapState } from 'vuex'
-import MainLayout from '../layouts/Main.vue'
+import MainLayout from '../../layouts/Main.vue'
 import axios from "axios";
 import FileSaver from 'file-saver'
 
 
-const mockHerosData = require("../mock/heros.json");
+const mockHerosData = require("../../mock/heros.json");
 
 export default {
     name: 'app',

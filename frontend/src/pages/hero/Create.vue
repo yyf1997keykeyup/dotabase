@@ -73,11 +73,11 @@
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
+  import MainLayout from '../../layouts/Main.vue'
   import axios from 'axios';
   import { mapState } from 'vuex'
 
-  const mockHeroData = require("../mock/hero_detail.json");
+  const mockHeroData = require("../../mock/hero_detail.json");
 
   export default {
     computed: mapState({
@@ -107,14 +107,14 @@
                 .then(response => {
                     this.hero = response.data
                     alert("succeed to create!")
-                    this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
+                    this.$router.push({name: "hero_detail", param: {"id": this.hero.heroid}})
                 })
                 .catch(e => {
                     this.errors.push(e)
                 })
             } else {
                 alert("succeed to create!")
-                this.$router.push({name: "detail", param: {"id": this.hero.heroid}})
+                this.$router.push({name: "hero_detail", param: {"id": this.hero.heroid}})
             }
         }
     },

@@ -1,7 +1,8 @@
 const state = {
   user: {
     username: "",
-    permission: {}
+    token: "",
+    permission: {},
   }
   }
 
@@ -11,19 +12,17 @@ const state = {
   
   // actions
   const actions = {
-    // login({ dispatch, commit }, payload) {
-    //   commit('loginRequest', payload);
-    // },
   }
   
   // mutations
   const mutations = {
     loginRequest (state, payload) {
       state.user.username = payload.username
-      state.user.permission = payload.permission
+      state.user.token = payload.token
     },
     logoutRequest (state) {
       state.user.username = ""
+      state.user.token = ""
       state.user.permission = {}
     }
   }
