@@ -39,7 +39,10 @@ Hero Log的api:
 ```
 api: api/dotabase/hero_log
 ```
-
+获取指定Hero的log
+```
+api: api/dotabase/hero_log/?hero=<pk>
+```
 ## 相关资料
 * [Django官方文档](https://docs.djangoproject.com/en/3.0/)，有中文但翻译不完全
 * [RestFramework中文文档](https://q1mi.github.io/Django-REST-framework-documentation/tutorial/1-serialization_zh/)

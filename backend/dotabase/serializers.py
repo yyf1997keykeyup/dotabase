@@ -10,9 +10,10 @@ class HeroSerializer(serializers.ModelSerializer):
 
 
 class LogSerializer(serializers.ModelSerializer):
+    hero_name = serializers.CharField(source='hero.name')
     class Meta:
         model = ProjHeroLog
-        fields = '__all__'
+        fields = ('hero', 'hero_name', 'attr_health', 'attr_maga', 'attr_damage', 'create_time')
 
 
 class LoginSerializer(serializers.ModelSerializer):

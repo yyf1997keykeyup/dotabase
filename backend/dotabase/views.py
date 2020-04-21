@@ -55,7 +55,7 @@ class LogList(generics.ListAPIView):
     serializer_class = LogSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = LogFilter
-    search_fields = ('attr_damage', 'attr_maga', 'attr_health', )
+    search_fields = ('hero', 'attr_damage', 'attr_maga', 'attr_health', )
 
 class LogUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjHeroLog.objects.all()
