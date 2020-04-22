@@ -90,6 +90,7 @@ import { mapState } from 'vuex'
             evt.preventDefault()
             alert("succeed to logout!")
             this.$store.commit('login/logoutRequest')
+            this.$router.push({name: "login"})
         }
     },
     components: {
