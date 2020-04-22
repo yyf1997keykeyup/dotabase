@@ -117,7 +117,7 @@ class ProjItem(models.Model):
     itemname = models.CharField(db_column='ItemName', max_length=255)  # Field name made lowercase.
     category = models.CharField(db_column='Category', max_length=255)  # Field name made lowercase.
     imgurl = models.CharField(db_column='ImgUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=1024, blank=True, null=True)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=1024, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
