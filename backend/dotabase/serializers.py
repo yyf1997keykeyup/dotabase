@@ -23,3 +23,8 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         return data
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjItem
+        fields = '__all__'

@@ -11,6 +11,15 @@ class HeroFilter(django_filters.rest_framework.FilterSet):
         model = ProjHero
         fields = ['name', 'bio',]
 
+class ItemFilter(django_filters.rest_framework.FilterSet):
+    item_id = django_filters.CharFilter(field_name="itemid")
+    item_name = django_filters.CharFilter(field_name="itemname")
+
+    class Meta:
+        model = ProjItem
+        fields = ['item_name']
+    
+
 
 # class UserFilter(django_filters.rest_framework.FilterSet):
 #     name = django_filters.CharFilter(field_name="username")
@@ -30,3 +39,5 @@ class LogFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = ProjHeroLog
         fields = ['hero', 'attr_health', 'attr_damage', 'attr_maga']
+
+    
