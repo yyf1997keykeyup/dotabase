@@ -5,6 +5,7 @@ from dotabase.models import *
 
 admin.site.register(ProjHero)
 admin.site.register(ProjHeroLog)
+admin.site.register(ProjItem)
 # admin.site.register(HeroBadAgainst)
 # admin.site.register(HeroGoodAgainst)
 # admin.site.register(HeroBestCombos)

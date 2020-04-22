@@ -79,7 +79,8 @@ export default {
         } else {
           this.heros = []
           for (var i=0; i<this.allHeros.length; i++) {
-            if (this.allHeros[i].name.indexOf(val) > -1) {
+            var name = this.allItems[i].itemname.toLowerCase()
+            if (name.indexOf(val) > -1) {
               this.heros.push(this.allHeros[i])
             }
           }

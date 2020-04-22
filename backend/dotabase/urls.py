@@ -11,6 +11,8 @@ urlpatterns = [
     #url(r'^user/$', UserRegister.as_view()),
     url(r'^hero_log/$', LogList.as_view()),
     url(r'^hero_log/(?P<pk>[0-9]+)/$', LogUpdate.as_view()),
+    url(r'^item/$', ItemList.as_view()),
+    url(r'^item/(?P<pk>[0-9]+)/$', ItemUpdate.as_view()),
     url(r'^user/login/$', Login.as_view()),
     url(r'^user/get_token/$', obtain_jwt_token),
     url(r'^user/token_validate/$', verify_jwt_token),

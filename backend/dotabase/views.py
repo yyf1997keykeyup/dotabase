@@ -43,6 +43,19 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
     #         return Response({'msg': 'add failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ItemList(generics.ListCreateAPIView):
+    queryset = ProjItem.objects.all()
+    serializer_class = ItemSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = ItemFilter
+    search_fields = ('item_name')
+
+class ItemUpdate(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck, )
+    queryset = ProjItem.objects.all()
+    serializer_class = ItemSerializer
+    
+
 # class UserRegister(generics.ListCreateAPIView):
 #     queryset = Authuser.objects.all()
 #     serializer_class = UserSerializer

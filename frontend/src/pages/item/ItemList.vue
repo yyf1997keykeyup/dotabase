@@ -29,10 +29,10 @@
                         <div class="portfolio-items row">
                           <Item
                           v-for="item in items"
-                          :key="item.item_id"
-                          :id="item.item_id"
-                          :name="item.item_name"
-                          :image="item.img_url"></Item>
+                          :key="item.itemid"
+                          :id="item.itemid"
+                          :name="item.itemname"
+                          :image="item.imgurl"></Item>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,8 @@ export default {
         } else {
           this.items = []
           for (var i=0; i<this.allItems.length; i++) {
-            if (this.allItems[i].item_name.indexOf(val) > -1) {
+            var name = this.allItems[i].itemname.toLowerCase()
+            if (name.indexOf(val) > -1) {
               this.items.push(this.allItems[i])
             }
           }
