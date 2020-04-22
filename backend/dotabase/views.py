@@ -50,7 +50,7 @@ class ItemList(generics.ListCreateAPIView):
     filter_class = ItemFilter
     search_fields = ('item_name')
 
-class ItemUpdate(generics.ListCreateAPIView):
+class ItemUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AdminCheck, )
     queryset = ProjItem.objects.all()
     serializer_class = ItemSerializer

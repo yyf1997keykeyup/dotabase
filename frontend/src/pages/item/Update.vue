@@ -12,50 +12,32 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group position-relative">
                                                         <label> Name </label>
-                                                        <input v-model="hero.name" name="name" id="name" type="text" class="form-control pl-5" placeholder="Name" required>
-                                                    </div>
-                                                </div><!--end col-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group position-relative">
-                                                        <label> Type </label>
-                                                        <input v-model="hero.type" name="type" id="type" type="text" class="form-control pl-5" placeholder="Type" required>
-                                                    </div>
-                                                </div><!--end col-->
-                                                <div class="col-md-3">
-                                                    <div class="form-group position-relative">
-                                                        <label> Health </label>
-                                                        <input v-model="hero.attr_health" name="health" id="health" type="text" class="form-control pl-5" placeholder="Health">
-                                                    </div>
-                                                </div><!--end col-->
-                                                <div class="col-md-3">
-                                                    <div class="form-group position-relative">
-                                                        <label> Mana </label>
-                                                        <input v-model="hero.attr_mana" name="mana" id="mana" type="text" class="form-control pl-5" placeholder="Mana">
-                                                    </div>
-                                                </div><!--end col-->
-                                                <div class="col-md-3">
-                                                    <div class="form-group position-relative">
-                                                        <label> Damage </label>
-                                                        <input v-model="hero.attr_damage" name="damage" id="damage" type="text" class="form-control pl-5" placeholder="Damage">
+                                                        <input v-model="item.itemname" name="name" id="name" type="text" class="form-control pl-5" placeholder="Name" required>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
                                                     <div class="form-group position-relative">
                                                         <label> Image Url </label>
-                                                        <input v-model="hero.imageurl" name="image" id="image" type="text" class="form-control pl-5" placeholder="Image Url">
+                                                        <input v-model="item.imgurl" name="image" id="image" type="text" class="form-control pl-5" placeholder="Image Url">
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
                                                     <div class="form-group position-relative">
                                                         <div class="image">
-                                                            <img :src="hero.imageurl" class="img-fluid" alt="">
+                                                            <img :src="item.imgurl" class="img-fluid" alt="">
                                                         </div>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
                                                     <div class="form-group position-relative">
-                                                        <label>Bio</label>
-                                                        <textarea v-model="hero.bio" name="comments" id="comments" rows="4" class="form-control pl-5" placeholder="The Bio..."></textarea>
+                                                        <label>Category</label>
+                                                        <textarea v-model="item.category" name="comments" id="comments" rows="4" class="form-control pl-5" placeholder="The Bio..."></textarea>
+                                                    </div>
+                                                </div><!--end col-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group position-relative">
+                                                        <label>More Infomation</label>
+                                                        <textarea v-model="item.info" name="comments" id="comments" rows="4" class="form-control pl-5" placeholder="The Bio..."></textarea>
                                                     </div>
                                                 </div>
                                             </div><!--end row-->
@@ -86,36 +68,35 @@
   import axios from 'axios';
   import { mapState } from 'vuex'
 
-  const mockHeroData = require("../../mock/hero_detail.json");
+  const mockItemData = require("../../mock/item_detail.json");
 
   export default {
     computed: mapState({
       mock: state => state.debug.config.mock,
       token: state => state.login.user.token,
-      operateHeroApi: state => state.api.host + state.api.backend.operateHero,
+      operateItemApi: state => state.api.host + state.api.backend.operateItem,
     }),
     data: function() {
       return {
-        hero: {},
+        item: {},
         errors: [],
       }
     },
     created() {
         if (this.mock) {
-            this.hero = mockHeroData.data;
+            this.item = mockItemData.data;
         } else {
             var config = {
                 useCredentails: true
             };
-            // axios.get(this.operateHeroApi + this.$route.params.heroid + `/`, config)
             axios({  
                 method: 'GET', 
-                url: this.operateHeroApi + this.$route.params.heroid + `/`, 
+                url: this.operateItemApi + this.$route.params.itemid + `/`, 
                 headers: {Authorization: this.token}, 
                 data: { config } 
             })
             .then(response => {
-                this.hero = response.data
+                this.item = response.data
             }, error => {
                 if (error.response.status === 401) {
                     if (error.response.data.detail === "Authentication credentials were not provided.") {
@@ -133,18 +114,17 @@
     methods: {
         updateRequest(evt) {
             if (!this.mock) {
-                // axios.put(this.operateHeroApi + this.hero.heroid + `/`, this.hero)
-                var hero = this.hero
+                var item = this.item
                 axios({  
                     method: 'PUT', 
-                    url: this.operateHeroApi + this.hero.heroid + `/`, 
+                    url: this.operateItemApi + this.item.itemid + `/`, 
                     headers: {Authorization: this.token}, 
-                    data: hero
+                    data: item
                 })
                 .then(response => {
-                    this.hero = response.data
+                    this.item = response.data
                     alert("succeed to update!")
-                    this.$router.push({name: "hero_detail", param: {heroid: this.hero.heroid}})
+                    this.$router.push({name: "item_detail", param: {itemid: this.item.itemid}})
                 }, error => {
                     if (error.response.status === 401) {
                         if (error.response.data.detail === "Authentication credentials were not provided.") {
@@ -159,7 +139,7 @@
                 })
             } else {
                 alert("succeed to update!")
-                this.$router.push({name: "hero_detail", param: {heroid: this.hero.heroid}})
+                this.$router.push({name: "item_detail", param: {itemid: this.item.itemid}})
             }
         }
     },

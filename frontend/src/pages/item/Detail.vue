@@ -6,8 +6,10 @@
                     <div class="container">
                         <div class="title-block mx-auto">
                             <div class="section_title mb-4 text-center">
-                                <h2><span>{{item.item_name}}</span></h2>
-                                <p class="section_subtitle mx-auto">{{item.category}}</p>
+                                <h2><span>{{item.itemname}}</span></h2>
+                                <div class="image">
+                                        <img :src="item.imgurl" class="img-fluid" alt="">
+                                    </div>
                             </div>
                         </div>
                         <div class="row">
@@ -15,44 +17,24 @@
                                 <li class="button-border list-inline-item">
                                     <a @click="exportRequest" class="pill-button">Export</a>
                                 </li>
-                                <!-- <router-link :to="{name: 'item_update', params: {'item_id': item.item_id}}">  -->
+                                <router-link :to="{name: 'item_update', params: {'itemid': item.itemid}}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Update</a>
                                     </li>
-                                <!-- </router-link> -->
+                                </router-link>
                                 <li class="button-border list-inline-item">
                                     <a @click="deleteRequest" class="pill-button">Delete</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="image">
-                            <img :src="item.img_url" class="img-fluid" alt="">
-                        </div>
                         <div class="row">
-                            <div class="col-lg-4 col-6">
-                                <div class="counter-block">
-                                    <span class="mdi mdi-fire"></span>
-                                    <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ item.attr_health }}</em></h3>
-                                        <p class="mb-0">Shops</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-6">
-                                <div class="counter-block">
-                                    <span class="mdi mdi-coffee-outline"></span>
-                                    <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ item.attr_mana }}</em></h3>
-                                        <p class="mb-0">Recipe Cost</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-6">
-                                <div class="counter-block">
-                                    <span class="mdi mdi-account-multiple-outline"></span>
-                                    <div class="details">
-                                        <h3 class="mb-0 mt-0 number"><em class="count">{{ item.attr_damage }}</em></h3>
-                                        <p class="mb-0">Total Cost</p>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Category
+                                        </h4>
+                                        <div v-html="item.category" class="text"></div>
                                     </div>
                                 </div>
                             </div>
@@ -60,9 +42,9 @@
                                 <div class="about-text-block">
                                     <div class="about-content">
                                         <h4>
-                                            Description
+                                            More Infomation
                                         </h4>
-                                        <div class="text">{{ item.Description }} </div>
+                                        <div v-html="item.info" class="text"></div>
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +73,17 @@
     data: function() {
       return {
         item: {},
+        originItem: {},
         errors: [],
       }
     },
     created() {
+        let reg=new RegExp("\n","g")
         if (this.mock) {
-            this.item = mockItemData.data;
+            this.originItem = this.mockItemData.data
+            this.item = JSON.parse(JSON.stringify(this.originItem))
+            this.item.info = this.item.info.replace(reg,"<br>")
+            this.item.category = this.item.category.replace(reg,"<br>")
         } else {
             var config = {
                 useCredentails: true
@@ -104,11 +91,14 @@
             // get hero info
             axios({  
                 method: 'GET', 
-                url: this.operateItemApi + this.$route.params.heroid + "/", 
+                url: this.operateItemApi + this.$route.params.itemid + "/", 
                 headers: {Authorization: this.token}, 
                 data: { config } 
             }).then(response => {
-                this.item = response.data
+                this.originItem = response.data
+                this.item = JSON.parse(JSON.stringify(this.originItem))
+                this.item.info = this.item.info.replace(reg,"<br>")
+                this.item.category = this.item.category.replace(reg,"<br>")
             }, error => {
                 if (error.response.status === 401) {
                     if (error.response.data.detail === "Authentication credentials were not provided.") {
@@ -117,7 +107,7 @@
                         this.$router.push({name: "login"})
                     } else {
                         alert("You don't have the authorization!")
-                        this.$router.push({name: "homepage"})
+                        this.$router.push({name: "item_list"})
                     }
                 }
             })
@@ -125,8 +115,8 @@
     },
     methods: {
         deleteRequest(evt) {
-            var r=confirm("Are you sure to delete the hero?");
-            if (r==true)
+            var r = confirm("Are you sure to delete the hero?");
+            if (r == true)
             {
                 if (!this.mock) {
                     var config = {
@@ -134,13 +124,12 @@
                     };
                     axios({  
                         method: 'DELETE', 
-                        url: this.operateItemApi + this.hero.heroid + "/",
+                        url: this.operateItemApi + this.item.itemid + "/",
                         headers: {Authorization: this.token}, 
                         data: { config }
                     })
                     .then(response => {
-                        this.item = response.data
-                        this.$router.push({name: "homepage"})
+                        this.$router.push({name: "item_list"})
                     }, error => {
                         if (error.response.status === 401) {
                             if (error.response.data.detail === "Authentication credentials were not provided.") {
@@ -149,19 +138,19 @@
                                 this.$router.push({name: "login"})
                             } else {
                                 alert("You don't have the authorization!")
-                                this.$router.push({name: "homepage"})
+                                this.$router.push({name: "item_list"})
                             }
                         }
                     })
                 } else {
-                    this.$router.push({name: "homepage"})
+                    this.$router.push({name: "item_list"})
                 }
-                }
+            }
         },
         exportRequest(evt) {
-            const data = JSON.stringify(this.item)
+            const data = JSON.stringify(this.originItem)
             const blob = new Blob([data], {type: ''})
-            FileSaver.saveAs(blob, "Item_" + this.item.item_name + '.json')
+            FileSaver.saveAs(blob, "Item_" + this.item.itemname + '.json')
         }
     },
     components: {
@@ -169,3 +158,7 @@
     }
   }
 </script>
+
+<style scoped>
+
+</style>

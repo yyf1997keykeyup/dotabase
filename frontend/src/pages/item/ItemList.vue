@@ -19,11 +19,11 @@
                                 <li class="button-border list-inline-item">
                                     <a @click="exportAllItemsRequest" class="pill-button">Export All Items</a>
                                 </li>
-                                <!-- <router-link :to="{name: 'item_create'}">  -->
+                                <router-link :to="{name: 'item_create'}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Create a New Item</a>
                                     </li>
-                                <!-- </router-link> -->
+                                </router-link>
                             </ul>
                         </div>
                         <div class="portfolio-items row">
