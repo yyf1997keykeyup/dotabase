@@ -7,17 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-#
-# class Authuser(models.Model):
-#     user_id = models.AutoField(primary_key=True)
-#     username = models.CharField(max_length=255)
-#     password = models.CharField(max_length=128)
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'AuthUser'
-#
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -205,8 +194,8 @@ class ProjHero(models.Model):
 
 
 class ProjHerobadagainst(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='bad_against_h1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='bad_against_h2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name="bah1")  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name="bah2")  # Field name made lowercase.
     hbaid = models.AutoField(db_column='HBAid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -215,8 +204,8 @@ class ProjHerobadagainst(models.Model):
 
 
 class ProjHerobestcombos(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='best_combos_h1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='best_combos_h2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='bch1')  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='bch2')  # Field name made lowercase.
     hbcid = models.AutoField(db_column='HBCid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -225,8 +214,8 @@ class ProjHerobestcombos(models.Model):
 
 
 class ProjHerogoodagainst(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='good_against_h1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='good_against_h2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='gah1')  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='gah2')  # Field name made lowercase.
     hgaid = models.AutoField(db_column='HGAid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -278,8 +267,8 @@ class ProjItemEffect(models.Model):
 
 
 class ProjItemRecipe(models.Model):
-    itemid_1 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_1', related_name='recipe_item1')  # Field name made lowercase.
-    itemid_2 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_2', related_name='recipe_item2')  # Field name made lowercase.
+    itemid_1 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_1', related_name='iri1')  # Field name made lowercase.
+    itemid_2 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_2', related_name='iri2')  # Field name made lowercase.
     irpid = models.AutoField(db_column='IRpid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
