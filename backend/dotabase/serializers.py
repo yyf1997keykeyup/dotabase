@@ -28,3 +28,18 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjItem
         fields = '__all__'
+
+class HeroGoodAgainstSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjHerogoodagainst
+        fields = '__all__'
+
+class HeroBadAgainstSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjHerobadagainst
+        fields = '__all__'
+
+class HeroBestCombosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjHerobestcombos
+        fields = '__all__'
