@@ -144,14 +144,17 @@ class ProjItemRecipe(models.Model):
         db_table = 'proj_Item_Recipe'
 
 
-class ProjItemRecommend(models.Model):
-    heroid = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID')  # Field name made lowercase.
-    itemid = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID')  # Field name made lowercase.
-    irdid = models.AutoField(db_column='IRdid', primary_key=True)  # Field name made lowercase.
+class ProjItem(models.Model):
+    itemid = models.AutoField(db_column='ItemID', primary_key=True)  # Field name made lowercase.
+    itemname = models.CharField(db_column='ItemName', max_length=255)  # Field name made lowercase.
+    category = models.CharField(db_column='Category', max_length=255)  # Field name made lowercase.
+    imgurl = models.CharField(db_column='ImgUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=16384, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'proj_Item_Recommend'
+        db_table = 'proj_Item'
+
 
 
 class ProjPassiveeffect(models.Model):
@@ -168,11 +171,12 @@ class ProjSkill(models.Model):
     skillid = models.AutoField(db_column='SkillID', primary_key=True)  # Field name made lowercase.
     skillname = models.CharField(db_column='SkillName', max_length=255)  # Field name made lowercase.
     imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=1024)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=16384, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'proj_Skill'
+
 
 
 class ProjSkillEffect(models.Model):
@@ -188,11 +192,12 @@ class ProjSkillEffect(models.Model):
 class ProjTalent(models.Model):
     talentid = models.AutoField(db_column='TalentID', primary_key=True)  # Field name made lowercase.
     talentname = models.CharField(db_column='TalentName', max_length=255)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=255)  # Field name made lowercase.
+    info = models.CharField(db_column='Info',max_length=16384, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'proj_Talent'
+
 
 
 class ProjHeroLog(models.Model):
