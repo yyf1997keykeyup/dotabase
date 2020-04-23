@@ -55,14 +55,14 @@ class ItemUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjItem.objects.all()
     serializer_class = ItemSerializer
 
-class HerogoodAgainst(generics.ListCreateAPIView):
+class HeroGoodAgainst(generics.ListCreateAPIView):
     queryset = ProjHerogoodagainst.objects.all()
     serializer_class = HeroGoodAgainstSerializer 
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroGoodAgainstFilter
     search_fields = ("heroid_1","heroid_2")
 
-class HerobadAgainst(generics.ListCreateAPIView):
+class HeroBadAgainst(generics.ListCreateAPIView):
     queryset = ProjHerobadagainst.objects.all()
     serializer_class = HeroBadAgainstSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)

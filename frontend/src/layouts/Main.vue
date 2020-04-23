@@ -35,6 +35,14 @@
                               </router-link> 
                             </a>
                         </li>
+                        <li class="list-group-item">
+                            <a>
+                              <router-link :to="{name: 'hero_good_against'}"> 
+                                <span class="menu-icon mx-auto"><i class="mdi mdi-briefcase-outline"></i></span>
+                                <span>GoodAgainst</span>
+                              </router-link> 
+                            </a>
+                        </li>
                         <li v-if="username === ''" class="list-group-item">
                             <a>
                               <router-link :to="{name: 'login'}"> 
@@ -90,6 +98,7 @@ import { mapState } from 'vuex'
             evt.preventDefault()
             alert("succeed to logout!")
             this.$store.commit('login/logoutRequest')
+            this.$router.push({name: "login"})
         }
     },
     components: {
