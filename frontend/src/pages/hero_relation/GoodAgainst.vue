@@ -17,11 +17,11 @@
                         <div class="row">
                             <ul id="portfolio-filter" class="portfolio-filter filters">
                                 <li class="button-border list-inline-item">
-                                    <a @click="exportAllRelationsRequest" class="pill-button">Export All Good Against Relationship</a>
+                                    <a @click="exportAllRelationsRequest" class="pill-button">Export All Good Against Relationship</a >
                                 </li>
                                 <router-link :to="{name: 'hero_create'}"> 
                                     <li class="button-border list-inline-item">
-                                        <a class="pill-button">Create a New Hero Good Against</a>
+                                        <a class="pill-button">Create a New Hero Good Against</a >
                                     </li>
                                 </router-link>
                             </ul>
@@ -94,42 +94,30 @@ export default {
         var config = {
             useCredentails: true
         };
-        axios({  
+        axios.all([
+          axios({  
           method: 'GET', 
           url: this.getAllHeroApi, 
           headers: {Authorization: this.token},
           data: { config } 
-        })
-        .then(response => {
-          this.allHeros = response.data
-        }, error => {
-            if (error.response.status === 401) {
-              if (error.response.data.detail === "Authentication credentials were not provided.") {
-                alert("Timeout! Please Login!")
-                this.$store.commit('login/logoutRequest')
-                this.$router.push({name: "login"})
-              } else {
-                alert("You don't have the authorization!")
-                this.$router.push({name: "homepage"})
-              }
-            }
-        })
-
-        axios({  
-          method: 'GET', 
-          url: this.getAllGoodAgainstApi, 
-          headers: {Authorization: this.token},
-          data: { config } 
-        })
-        .then(response => {
-          this.relations = response.data
-          this.allRelations = response.data
+        }),axios({  
+            method: 'GET', 
+            url: this.getAllGoodAgainstApi, 
+            headers: {Authorization: this.token},
+            data: { config } 
+          })
+        ]).then(axios.spread((heroRes,relationRes) => {
+          this.allHeros = heroRes.data
+          this.relations = relationRes.data
+          this.allRelations = relationRes.data
           for(var i = 0; i < this.relations.length; i++) {
             this.herosLeft.push(this.allHeros[parseInt(this.relations[i].heroid_1)-1])
             this.herosRight.push(this.allHeros[parseInt(this.relations[i].heroid_2)-1])
+            // alert(JSON.stringify(this.herosLeft))
+            // alert(JSON.stringify(this.herosRight))
           }
-        }, error => {
-            if (error.response.status === 401) {
+        })).catch((error) => {
+          if (error.response.status === 401) {
               if (error.response.data.detail === "Authentication credentials were not provided.") {
                 alert("Timeout! Please Login!")
                 this.$store.commit('login/logoutRequest')
