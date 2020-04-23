@@ -35,14 +35,14 @@
                               </router-link> 
                             </a>
                         </li>
-                        <li class="list-group-item">
+                        <!-- <li class="list-group-item">
                             <a>
                               <router-link :to="{name: 'hero_good_against'}"> 
                                 <span class="menu-icon mx-auto"><i class="mdi mdi-briefcase-outline"></i></span>
                                 <span>GoodAgainst</span>
                               </router-link> 
                             </a>
-                        </li>
+                        </li> -->
                         <li v-if="username === ''" class="list-group-item">
                             <a>
                               <router-link :to="{name: 'login'}"> 

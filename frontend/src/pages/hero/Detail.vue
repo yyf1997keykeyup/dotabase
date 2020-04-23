@@ -171,7 +171,9 @@
       mock: state => state.debug.config.mock,
       token: state => state.login.user.token,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
-      getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId
+      getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId,
+      getGoodAgainstApi: state => state.api.host + state.api.backend.operateHeroGoodAgainst,
+
     }),
     data: function() {
       return {

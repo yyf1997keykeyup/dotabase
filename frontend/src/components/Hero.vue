@@ -1,5 +1,5 @@
 <template>
-    <div class="col-lg-4 portfolio-item seo">
+    <div class="col-lg-3 portfolio-item seo">
         <div class="image-border">
             <div class="portfolio-box">
                 <img :src="image" class="img-fluid" alt="">
@@ -21,13 +21,15 @@
 <script>
 
 export default {
-  name: 'hero',
-  props: ['id', 'name', 'image'],
-  filters: {
-  },
-  methods: {
-  },
-  components: {
-  },
+    name: 'hero',
+    props: ['id', 'name', 'image'],
+    filters: {
+    },
+    methods: {
+    },
+    components: {
+    },
+    computed: {
+    }
 };
 </script>

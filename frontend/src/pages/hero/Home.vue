@@ -29,6 +29,11 @@
                                         <a class="pill-button">Create a New Hero</a>
                                     </li>
                                 </router-link>
+                                <router-link :to="{name: 'hero_good_against'}"> 
+                                    <li class="button-border list-inline-item">
+                                        <a class="pill-button">Good Against List</a>
+                                    </li>
+                                </router-link>
                             </ul>
                         </div>
                         <div class="portfolio-items row">

@@ -26,8 +26,38 @@
                                 </router-link>
                             </ul>
                         </div>
-                        <div class="portfolio-items row">
-                          <Hero
+                        <table>
+                          <tr>
+                            <th>Hero</th>
+                            <th>Good Against</th>
+                          </tr>
+                          <tr v-for="(goodAgainstIds, sourseId, index) in goodAgainstList" :key="index">
+                            <th style="width:300px">
+                              <div class="row">
+                                <Hero
+                                  :key="sourseId"
+                                  :id="sourseId"
+                                  :name="id2heros[sourseId].name"
+                                  :image="id2heros[sourseId].imageurl"/>
+                                  <router-link :to="{name: 'hero_detail', params: {'heroid': sourseId}}">
+                                    <a style="font-size:35px">{{id2heros[sourseId].name}}</a>
+                                  </router-link>
+                              </div>
+                            </th>
+                            <th>
+                              <div class="portfolio-items row">
+                                <Hero 
+                                  v-for="gaId in goodAgainstIds"
+                                  :key="gaId"
+                                  :id="gaId"
+                                  :name="id2heros[gaId].name"
+                                  :image="id2heros[gaId].imageurl"/>
+                              </div>
+                            </th>
+                          </tr>
+                        </table>
+                        <!-- <div class="portfolio-items row"> -->
+                          <!-- <Hero
                           v-for="hero in herosLeft"
                           :key="hero.heroid"
                           :id="hero.heroid"
@@ -38,8 +68,8 @@
                           :key="hero.heroid"
                           :id="hero.heroid"
                           :name="hero.name"
-                          :image="hero.imageurl"></Hero>
-                        </div>
+                          :image="hero.imageurl"></Hero> -->
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -72,19 +102,22 @@ export default {
         herosLeft: [],
         herosRight: [],
         allHeros: [],
-        allRelations: [],
+        id2heros: {},
+        // allRelations: [],
+        goodAgainstList: {},
+        allGoodAgainstList: {},
       };
     },
     watch: {
       searchName: function (val) {
         if (val === "") {
-          this.relations = this.allRelations
+          this.goodAgainstList = this.allGoodAgainstList
         } else {
-          this.heros = []
-          for (var i=0; i<this.allHeros.length; i++) {
-            var name = this.allItems[i].itemname.toLowerCase()
+          this.goodAgainstList = {}
+          for (var gaKey in this.allGoodAgainstList) {
+            var name = this.id2heros[parseInt(gaKey)].name.toLowerCase()
             if (name.indexOf(val) > -1) {
-              this.heros.push(this.allHeros[i])
+              this.goodAgainstList[gaKey] = this.allGoodAgainstList[gaKey]
             }
           }
         }
@@ -108,14 +141,29 @@ export default {
           })
         ]).then(axios.spread((heroRes,relationRes) => {
           this.allHeros = heroRes.data
+          var tempId2heros = {}
+          for (var i = 0; i < this.allHeros.length; i++) {
+            tempId2heros[this.allHeros[i].heroid] = JSON.parse(JSON.stringify(this.allHeros[i]))
+          }
+          this.id2heros = tempId2heros
+
           this.relations = relationRes.data
-          this.allRelations = relationRes.data
+          // this.allRelations = relationRes.data
+          var VarGoodAgainstList = {}
           for(var i = 0; i < this.relations.length; i++) {
-            this.herosLeft.push(this.allHeros[parseInt(this.relations[i].heroid_1)-1])
-            this.herosRight.push(this.allHeros[parseInt(this.relations[i].heroid_2)-1])
+            // this.herosLeft.push(this.allHeros[parseInt(this.relations[i].heroid_1)-1])
+            // this.herosRight.push(this.allHeros[parseInt(this.relations[i].heroid_2)-1])
             // alert(JSON.stringify(this.herosLeft))
             // alert(JSON.stringify(this.herosRight))
+            // var herosLeft = this.allHeros[parseInt(this.relations[i].heroid_1)-1]
+            // var herosRight = this.allHeros[parseInt(this.relations[i].heroid_2)-1]
+            if (!VarGoodAgainstList.hasOwnProperty(this.relations[i].heroid_1)) {
+              VarGoodAgainstList[this.relations[i].heroid_1] = []
+            }
+            VarGoodAgainstList[this.relations[i].heroid_1].push(this.relations[i].heroid_2)
           }
+          this.goodAgainstList = VarGoodAgainstList
+          this.allGoodAgainstList = VarGoodAgainstList
         })).catch((error) => {
           if (error.response.status === 401) {
               if (error.response.data.detail === "Authentication credentials were not provided.") {
@@ -131,7 +179,7 @@ export default {
     },
     methods: {
         exportAllRelationsRequest(evt) {
-            const data = JSON.stringify(this.allRelations)
+            const data = JSON.stringify(this.goodAgainstList)
             const blob = new Blob([data], {type: ''})
             FileSaver.saveAs(blob, 'AllGoodAgainst.json')
         }
@@ -142,3 +190,19 @@ export default {
     },
 };
 </script>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
