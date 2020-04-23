@@ -1,0 +1,8 @@
+{
+    "data": [
+        {"skill_id": 1, "skill_name": "Acid Spray", "image_url": "https://www.dotafire.com/images/skill/alchemist-acid-spray.png", "info": "Slams the ground with a mighty totem, creating an impassable ridge of stone while stunning and damaging enemy units along its line."},
+        {"skill_id": 2, "skill_name": "Unstable Concoction", "image_url": "https://www.dotafire.com/images/skill/alchemist-unstable-concoction.png", "info": "Empowers Earthshaker's totem, causing it to deal extra damage and have 75 bonus attack range on the next attack."},
+        {"skill_id": 3, "skill_name": "Greevil's Greed", "image_url": "https://www.dotafire.com/images/skill/alchemist-greevils-greed.png", "info": "Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities."},
+        {"skill_id": 4, "skill_name": "Chemical Rage", "image_url": "https://www.dotafire.com/images/skill/alchemist-chemical-rage.png", "info": "Shockwaves travel through the ground, damaging enemy units. Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes."}
+    ]
+}

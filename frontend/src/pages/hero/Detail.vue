@@ -26,43 +26,21 @@
                             </ul>
                         </div>
                         <div class="row align-items-center">
+                            <div class="about-img-box">
+                                <div class="image">
+                                    <img :src="hero.imageurl" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                            <div v-for="skill in skills" :key="skill.skill_id">
+                                <div class="col-md-2 col-sm-6">
                                 <div class="about-img-box">
                                     <div class="image">
-                                        <img :src="hero.imageurl" class="img-fluid" alt="">
+                                        <img :src="skill.image_url" style="width:90px" :title="skill.info">
                                     </div>
+                                    <h5>{{skill.skill_name}}</h5>
                                 </div>
-                                <div class="col-md-2 col-sm-12">
-                                  <div class="about-img-box">
-                                    <div class="image">
-                                        <img src="https://www.dotafire.com/images/skill/abaddon-mist-coil.png" class="img-fluid" alt="">
-                                        example skill 1
-                                    </div>
-                                  </div>
                                 </div>
-                                <div class="col-md-2 col-sm-12">
-                                  <div class="about-img-box">
-                                    <div class="image">
-                                        <img src="https://www.dotafire.com/images/skill/abaddon-aphotic-shield.png" class="img-fluid" alt="">
-                                        example skill 2
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-2 col-sm-12">
-                                  <div class="about-img-box">
-                                    <div class="image">
-                                        <img src="https://www.dotafire.com/images/skill/abaddon-curse-of-avernus.png" class="img-fluid" alt="">
-                                        example skill 3
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-2 col-sm-12">
-                                  <div class="about-img-box">
-                                    <div class="image">
-                                        <img src="https://www.dotafire.com/images/skill/abaddon-borrowed-time.png" class="img-fluid" alt="">
-                                        example skill 4
-                                    </div>
-                                  </div>
-                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -93,29 +71,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="expert-box text-center">
-                                    <img src="https://www.dotafire.com/images/hero/icon/sven.png" class="img-fluid" alt="" />
-                                    <h3>Best Against</h3>
-                                    <p class="mb-0">hahahaha hahah hahahhaa hahahha hahhaha</p>
+                            <!-- <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="expert-box text-center">
+                                        <img src="https://www.dotafire.com/images/hero/icon/sven.png" class="img-fluid" alt="" />
+                                        <h3>Best Against</h3>
+                                        <p class="mb-0">hahahaha hahah hahahhaa hahahha hahhaha</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="expert-box text-center">
-                                    <img src="https://www.dotafire.com/images/hero/icon/anti-mage.png" class="img-fluid" alt="" />
-                                    <h3>Bad Against</h3>
-                                    <p class="mb-0">hahahaha hahah hahahh ahahah haha hhaha</p>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="expert-box text-center">
+                                        <img src="https://www.dotafire.com/images/hero/icon/anti-mage.png" class="img-fluid" alt="" />
+                                        <h3>Bad Against</h3>
+                                        <p class="mb-0">hahahaha hahah hahahh ahahah haha hhaha</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="expert-box text-center">
-                                    <img src="https://www.dotafire.com/images/hero/icon/phantom-assassin.png" class="img-fluid" alt="" />
-                                    <h3>Best Combo</h3>
-                                    <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="expert-box text-center">
+                                        <img src="https://www.dotafire.com/images/hero/icon/phantom-assassin.png" class="img-fluid" alt="" />
+                                        <h3>Best Combo</h3>
+                                        <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> -->
                             <div class="col-md-12 col-sm-12">
                                 <div class="about-text-block">
                                     <div class="about-content">
@@ -158,13 +136,14 @@
 </template>
 
 <script>
-  import MainLayout from '../../layouts/Main.vue'
-  import { mapState } from 'vuex'
-  import axios from 'axios'
-  import FileSaver from 'file-saver'
+    import MainLayout from '../../layouts/Main.vue'
+    import { mapState } from 'vuex'
+    import axios from 'axios'
+    import FileSaver from 'file-saver'
 
-  const mockHeroData = require("../../mock/hero_detail.json");
-  const mockHeroLogData = require("../../mock/hero_log.json");
+    const mockHeroData = require("../../mock/hero_detail.json");
+    const mockHeroSkillData = require("../../mock/hero_skill.json");
+    const mockHeroLogData = require("../../mock/hero_log.json");
 
   export default {
     computed: mapState({
@@ -172,20 +151,23 @@
       token: state => state.login.user.token,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
       getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId,
+      getSkillByHeroIdApi: state => state.api.host + state.api.backend.getSkillByHeroId,
       getGoodAgainstApi: state => state.api.host + state.api.backend.operateHeroGoodAgainst,
 
     }),
     data: function() {
       return {
         hero: {},
+        skills: {},
         logs: [],
         errors: [],
       }
     },
     created() {
         if (this.mock) {
-            this.hero = mockHeroData.data;
-            this.logs = mockHeroLogData.data;
+            this.hero = mockHeroData.data
+            this.skills= mockHeroSkillData.data
+            this.logs = mockHeroLogData.data
         } else {
             var config = {
                 useCredentails: true
@@ -198,6 +180,26 @@
                 data: { config } 
             }).then(response => {
                 this.hero = response.data
+            }, error => {
+                if (error.response.status === 401) {
+                    if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        this.$router.push({name: "homepage"})
+                    }
+                }
+            })
+            // get hero skill info
+            axios({  
+                method: 'GET', 
+                url: this.getSkillByHeroIdApi + "?hero=" + this.$route.params.heroid,
+                headers: {Authorization: this.token}, 
+            })
+            .then(response => {
+                this.skills = response.data
             }, error => {
                 if (error.response.status === 401) {
                     if (error.response.data.detail === "Authentication credentials were not provided.") {
