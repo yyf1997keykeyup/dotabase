@@ -46,13 +46,22 @@ class HeroBestCombosFilter(django_filters.rest_framework.FilterSet):
         model = ProjHerobestcombos
         fields = ["heroid_1","heroid_2"]
 
-class HeroSkillFilter(django_filters.rest_framework.FilterSet):
+class SkillFilter(django_filters.rest_framework.FilterSet):
     skillid = django_filters.CharFilter(field_name="skillid")
     skillname = django_filters.CharFilter(field_name="skillname")
 
     class Meta:
         model = ProjSkill
         fields = ["skillid","skillname"]
+
+class HeroSkillFilter(django_filters.rest_framework.FilterSet):
+    hsid = django_filters.CharFilter(field_name="hsid")
+    heroid = django_filters.CharFilter(field_name="heroid")
+    skillid = django_filters.CharFilter(field_name="skillid")
+
+    class Meta:
+        model = ProjHeroSkill
+        fields = ["hsid","heroid","skillid"]
 
 
 # class UserFilter(django_filters.rest_framework.FilterSet):
