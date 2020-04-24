@@ -1,4 +1,6 @@
+.DS_Store
 /venv/
+/__pycache__/
 *.sqlite3
 .classpath
 .project
@@ -9,3 +11,7 @@
 *.mdb
 *.ldb
 *.sln
+
+
+# Editor directories and files
+*.pyc
