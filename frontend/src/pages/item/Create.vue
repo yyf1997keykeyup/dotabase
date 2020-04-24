@@ -104,13 +104,13 @@
                     this.$router.push({name: "item_list"})
                 }, error => {
                     if (error.response.status === 401) {
-                        if (error.response.data.detail === "Authentication credentials were not provided.") {
+                        if (error.response.data.detail != "Authentication credentials were not provided.") {
                             alert("Timeout! Please Login!")
                             this.$store.commit('login/logoutRequest')
                             this.$router.push({name: "login"})
                         } else {
                             alert("You don't have the authorization!")
-                            this.$router.push({name: "homepage"})
+                            // this.$router.push({name: "homepage"})
                         }
                     }
                 })

@@ -85,6 +85,7 @@ export default {
       if (this.mock) {
         this.items = mockItemsData.data;
         this.allItems = mockItemsData.data;
+        alert(JSON.stringify(this.items))
       } else {
         var config = {
             useCredentails: true
@@ -100,13 +101,13 @@ export default {
             this.allItems = response.data
         }, error => {
             if (error.response.status === 401) {
-              if (error.response.data.detail === "Authentication credentials were not provided.") {
+              if (error.response.data.detail != "Authentication credentials were not provided.") {
                 alert("Timeout! Please Login!")
                 this.$store.commit('login/logoutRequest')
                 this.$router.push({name: "login"})
               } else {
                 alert("You don't have the authorization!")
-                this.$router.push({name: "homepage"})
+                // this.$router.push({name: "homepage"})
               }
             }
         })

@@ -32,6 +32,7 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HeroSerializer
 
 class ItemList(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjItem.objects.all()
     serializer_class = ItemSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
@@ -52,6 +53,7 @@ class ItemList(generics.ListCreateAPIView):
 
 
 class ItemList(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjItem.objects.all()
     serializer_class = ItemSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
@@ -64,6 +66,7 @@ class ItemUpdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ItemSerializer
 
 class HeroGoodAgainst(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjHerogoodagainst.objects.all()
     serializer_class = HeroGoodAgainstSerializer 
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
@@ -71,6 +74,7 @@ class HeroGoodAgainst(generics.ListCreateAPIView):
     search_fields = ("heroid_1","heroid_2")
 
 class HeroBadAgainst(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjHerobadagainst.objects.all()
     serializer_class = HeroBadAgainstSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
@@ -78,6 +82,7 @@ class HeroBadAgainst(generics.ListCreateAPIView):
     search_fields = ("heroid_1","heroid_2")
 
 class HeroBestCombos(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjHerobestcombos.objects.all()
     serializer_class = HeroBestCombosSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)

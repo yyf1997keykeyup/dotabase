@@ -1,8 +1,8 @@
 {"data": [
-    {"item_id":1, "item_name":"AEON DISK", "img_url":"https://www.dotafire.com/images/item/aeon-disk.png"},
-    {"item_id":2, "item_name":"AETHER LENS", "img_url":"https://www.dotafire.com/images/item/aether-lens.png"},
-    {"item_id":3, "item_name":"ASSAULT CUIRASS", "img_url":"https://www.dotafire.com/images/item/assault-cuirass.png"},
-    {"item_id":4, "item_name":"BAND OF ELVENSKIN", "img_url":"https://www.dotafire.com/images/item/band-of-elvenskin.png"},
-    {"item_id":5, "item_name":"BLADES OF ATTACK", "img_url":"https://www.dotafire.com/images/item/blades-of-attack.png"}
+    {"itemid":1, "itemname":"AEON DISK", "imgurl":"https://www.dotafire.com/images/item/aeon-disk.png"},
+    {"itemid":2, "itemname":"AETHER LENS", "imgurl":"https://www.dotafire.com/images/item/aether-lens.png"},
+    {"itemid":3, "itemname":"ASSAULT CUIRASS", "imgurl":"https://www.dotafire.com/images/item/assault-cuirass.png"},
+    {"itemid":4, "itemname":"BAND OF ELVENSKIN", "imgurl":"https://www.dotafire.com/images/item/band-of-elvenskin.png"},
+    {"itemid":5, "itemname":"BLADES OF ATTACK", "imgurl":"https://www.dotafire.com/images/item/blades-of-attack.png"}
     ]
 }
