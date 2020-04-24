@@ -11,6 +11,8 @@ class HeroFilter(django_filters.rest_framework.FilterSet):
         model = ProjHero
         fields = ['name', 'bio',]
 
+class ItemFilter(django_filters.rest_framework.FilterSet):
+    name = django_filters.CharFilter(field_name='')
 
 # class UserFilter(django_filters.rest_framework.FilterSet):
 #     name = django_filters.CharFilter(field_name="username")

@@ -20,6 +20,7 @@ logger = logging.getLogger('django')
 class HeroList(generics.ListCreateAPIView):
     queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
+    permission_classes = (AdminCheck, )
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroFilter
     search_fields = ('name', 'bio',)
@@ -29,6 +30,13 @@ class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AdminCheck, )
     queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
+
+class ItemList(generics.ListCreateAPIView):
+    queryset = ProjItem.objects.all()
+    serializer_class = ItemSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = HeroFilter
+    search_fields = ('itemname', )
 
     # def put(self, request, pk):
     #     hero = ProjHero.objects.get(pk=pk)
