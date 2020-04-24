@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^hero_good_against/$',HeroGoodAgainst.as_view()),
     url(r'^hero_bad_against/$',HeroBadAgainst.as_view()),
     url(r'^hero_best_combos/$',HeroBestCombos.as_view()),
+    url(r'^hero_skill/$',HeroSkill.as_view()),
     url(r'^user/login/$', Login.as_view()),
     url(r'^user/get_token/$', obtain_jwt_token),
     url(r'^user/token_validate/$', verify_jwt_token),
