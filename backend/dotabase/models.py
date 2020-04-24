@@ -7,6 +7,156 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.IntegerField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.IntegerField()
+    is_active = models.IntegerField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
+class CorsheadersCorsmodel(models.Model):
+    cors = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'corsheaders_corsmodel'
+
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.PositiveSmallIntegerField()
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
+class DotabaseModifyuser(models.Model):
+    user_ptr = models.OneToOneField('DotabaseUser', models.DO_NOTHING, primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dotabase_modifyuser'
+
+
+class DotabaseNormaluser(models.Model):
+    user_ptr = models.OneToOneField('DotabaseUser', models.DO_NOTHING, primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dotabase_normaluser'
+
+
+class DotabaseSuperuser(models.Model):
+    user_ptr = models.OneToOneField('DotabaseUser', models.DO_NOTHING, primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dotabase_superuser'
+
+
+class DotabaseUser(models.Model):
+    username = models.CharField(primary_key=True, max_length=20)
+    password = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'dotabase_user'
+
 
 class ProjActiveeffect(models.Model):
     effectid = models.OneToOneField('ProjEffect', models.DO_NOTHING, db_column='EffectID', primary_key=True)  # Field name made lowercase.
@@ -44,8 +194,8 @@ class ProjHero(models.Model):
 
 
 class ProjHerobadagainst(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='bad_against_hero1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='bad_against_hero2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name="bah1")  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name="bah2")  # Field name made lowercase.
     hbaid = models.AutoField(db_column='HBAid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -54,8 +204,8 @@ class ProjHerobadagainst(models.Model):
 
 
 class ProjHerobestcombos(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='best_combos_hero1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='best_combos_hero2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='bch1')  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='bch2')  # Field name made lowercase.
     hbcid = models.AutoField(db_column='HBCid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -64,8 +214,8 @@ class ProjHerobestcombos(models.Model):
 
 
 class ProjHerogoodagainst(models.Model):
-    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='good_against_hero1')  # Field name made lowercase.
-    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='good_against_hero2')  # Field name made lowercase.
+    heroid_1 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_1', related_name='gah1')  # Field name made lowercase.
+    heroid_2 = models.ForeignKey(ProjHero, models.DO_NOTHING, db_column='HeroID_2', related_name='gah2')  # Field name made lowercase.
     hgaid = models.AutoField(db_column='HGAid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -99,7 +249,7 @@ class ProjItem(models.Model):
     itemname = models.CharField(db_column='ItemName', max_length=255)  # Field name made lowercase.
     category = models.CharField(db_column='Category', max_length=255)  # Field name made lowercase.
     imgurl = models.CharField(db_column='ImgUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=1024, blank=True, null=True)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=16384, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -117,8 +267,8 @@ class ProjItemEffect(models.Model):
 
 
 class ProjItemRecipe(models.Model):
-    itemid_1 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_1', related_name='repice_item1')  # Field name made lowercase.
-    itemid_2 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_2', related_name='repice_item2')  # Field name made lowercase.
+    itemid_1 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_1', related_name='iri1')  # Field name made lowercase.
+    itemid_2 = models.ForeignKey(ProjItem, models.DO_NOTHING, db_column='ItemID_2', related_name='iri2')  # Field name made lowercase.
     irpid = models.AutoField(db_column='IRpid', primary_key=True)  # Field name made lowercase.
 
     class Meta:
@@ -150,7 +300,7 @@ class ProjSkill(models.Model):
     skillid = models.AutoField(db_column='SkillID', primary_key=True)  # Field name made lowercase.
     skillname = models.CharField(db_column='SkillName', max_length=255)  # Field name made lowercase.
     imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=1024)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=16384, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -170,7 +320,7 @@ class ProjSkillEffect(models.Model):
 class ProjTalent(models.Model):
     talentid = models.AutoField(db_column='TalentID', primary_key=True)  # Field name made lowercase.
     talentname = models.CharField(db_column='TalentName', max_length=255)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=255)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=16384, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

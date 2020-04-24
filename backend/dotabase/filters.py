@@ -12,7 +12,39 @@ class HeroFilter(django_filters.rest_framework.FilterSet):
         fields = ['name', 'bio',]
 
 class ItemFilter(django_filters.rest_framework.FilterSet):
-    name = django_filters.CharFilter(field_name='')
+    item_id = django_filters.CharFilter(field_name="itemid")
+    item_name = django_filters.CharFilter(field_name="itemname")
+
+    class Meta:
+        model = ProjItem
+        fields = ['item_name']
+    
+class HeroGoodAgainstFilter(django_filters.rest_framework.FilterSet):
+    heroid_1 = django_filters.CharFilter(field_name="heroid_1")
+    heroid_2 = django_filters.CharFilter(field_name="heroid_2")
+    hgaid = django_filters.CharFilter(field_name="hgaid")
+    
+    class Meta:
+        model = ProjHerogoodagainst
+        fields = ["heroid_1","heroid_2"]
+
+class HeroBadAgainstFilter(django_filters.rest_framework.FilterSet):
+    heroid_1 = django_filters.CharFilter(field_name="heroid_1")
+    heroid_2 = django_filters.CharFilter(field_name="heroid_2")
+    hgaid = django_filters.CharFilter(field_name="hgaid")
+    
+    class Meta:
+        model = ProjHerobadagainst
+        fields = ["heroid_1","heroid_2"]
+
+class HeroBestCombosFilter(django_filters.rest_framework.FilterSet):
+    heroid_1 = django_filters.CharFilter(field_name="heroid_1")
+    heroid_2 = django_filters.CharFilter(field_name="heroid_2")
+    hgaid = django_filters.CharFilter(field_name="hgaid")
+    
+    class Meta:
+        model = ProjHerobestcombos
+        fields = ["heroid_1","heroid_2"]
 
 # class UserFilter(django_filters.rest_framework.FilterSet):
 #     name = django_filters.CharFilter(field_name="username")
@@ -32,3 +64,5 @@ class LogFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = ProjHeroLog
         fields = ['hero', 'attr_health', 'attr_damage', 'attr_maga']
+
+    

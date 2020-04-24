@@ -51,6 +51,40 @@ class ItemList(generics.ListCreateAPIView):
     #         return Response({'msg': 'add failed'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ItemList(generics.ListCreateAPIView):
+    queryset = ProjItem.objects.all()
+    serializer_class = ItemSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = ItemFilter
+    search_fields = ('item_name')
+
+class ItemUpdate(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (AdminCheck, )
+    queryset = ProjItem.objects.all()
+    serializer_class = ItemSerializer
+
+class HeroGoodAgainst(generics.ListCreateAPIView):
+    queryset = ProjHerogoodagainst.objects.all()
+    serializer_class = HeroGoodAgainstSerializer 
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = HeroGoodAgainstFilter
+    search_fields = ("heroid_1","heroid_2")
+
+class HeroBadAgainst(generics.ListCreateAPIView):
+    queryset = ProjHerobadagainst.objects.all()
+    serializer_class = HeroBadAgainstSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = HeroBadAgainstFilter
+    search_fields = ("heroid_1","heroid_2")
+
+class HeroBestCombos(generics.ListCreateAPIView):
+    queryset = ProjHerobestcombos.objects.all()
+    serializer_class = HeroBestCombosSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = HeroBestCombosFilter
+    search_fields = ("heroid_1","heroid_2")
+
+
 # class UserRegister(generics.ListCreateAPIView):
 #     queryset = Authuser.objects.all()
 #     serializer_class = UserSerializer

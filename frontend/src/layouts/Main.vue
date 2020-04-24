@@ -13,7 +13,7 @@
                     <ul class="list-group text-center" id="menu">
                         <li class="list-group-item">
                           <router-link :to="{name: 'homepage', params: {}}">
-                            <a class="active">
+                            <a>
                                 <span class="menu-icon mx-auto"><i class="mdi mdi-home-outline"></i></span>
                                 <span>Home</span>
                             </a>
@@ -29,10 +29,20 @@
                         </li>
                         <li class="list-group-item">
                             <a>
+                              <router-link :to="{name: 'item_list'}"> 
                                 <span class="menu-icon mx-auto"><i class="mdi mdi-briefcase-outline"></i></span>
                                 <span>Items</span>
+                              </router-link> 
                             </a>
                         </li>
+                        <!-- <li class="list-group-item">
+                            <a>
+                              <router-link :to="{name: 'hero_good_against'}"> 
+                                <span class="menu-icon mx-auto"><i class="mdi mdi-briefcase-outline"></i></span>
+                                <span>GoodAgainst</span>
+                              </router-link> 
+                            </a>
+                        </li> -->
                         <li v-if="username === ''" class="list-group-item">
                             <a>
                               <router-link :to="{name: 'login'}"> 
@@ -88,6 +98,7 @@ import { mapState } from 'vuex'
             evt.preventDefault()
             alert("succeed to logout!")
             this.$store.commit('login/logoutRequest')
+            this.$router.push({name: "login"})
         }
     },
     components: {

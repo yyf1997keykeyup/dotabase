@@ -1,6 +1,6 @@
 const state = {
     config: {
-        mock: false,
+        mock: true,
     }
 }
 

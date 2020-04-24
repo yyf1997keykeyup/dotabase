@@ -10,6 +10,10 @@
                                 <h2><span>All Heros!!!</span></h2>
                             </div>
                         </div>
+                        <div class="position-relative">
+                            <label> Hero Search... </label>
+                            <input v-model="searchName" name="searchName" id="searchName" type="text" placeholder="Search for your hero..." required>
+                        </div>
                         <div class="row">
                             <ul id="portfolio-filter" class="portfolio-filter filters">
                               <router-link :to="{name: 'hero_logs'}"> 
@@ -23,6 +27,11 @@
                                 <router-link :to="{name: 'hero_create'}"> 
                                     <li class="button-border list-inline-item">
                                         <a class="pill-button">Create a New Hero</a>
+                                    </li>
+                                </router-link>
+                                <router-link :to="{name: 'hero_good_against'}"> 
+                                    <li class="button-border list-inline-item">
+                                        <a class="pill-button">Good Against List</a>
                                     </li>
                                 </router-link>
                             </ul>
@@ -62,13 +71,31 @@ export default {
     }),
     data() {
       return {
+        searchName: "",
         heros: [],
         errors: [],
+        allHeros: []
       };
+    },
+    watch: {
+      searchName: function (val) {
+        if (val === "") {
+          this.heros = this.allHeros
+        } else {
+          this.heros = []
+          for (var i=0; i<this.allHeros.length; i++) {
+            var name = this.allItems[i].itemname.toLowerCase()
+            if (name.indexOf(val) > -1) {
+              this.heros.push(this.allHeros[i])
+            }
+          }
+        }
+      }
     },
     created() {
       if (this.mock) {
         this.heros = mockHerosData.data;
+        this.allHeros = mockHerosData.data;
       } else {
         var config = {
             useCredentails: true
@@ -82,6 +109,7 @@ export default {
         })
         .then(response => {
           this.heros = response.data
+          this.allHeros = response.data
         }, error => {
             if (error.response.status === 401) {
               if (error.response.data.detail === "Authentication credentials were not provided.") {
