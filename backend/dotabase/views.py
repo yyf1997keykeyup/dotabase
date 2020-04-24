@@ -89,6 +89,13 @@ class HeroBestCombos(generics.ListCreateAPIView):
     filter_class = HeroBestCombosFilter
     search_fields = ("heroid_1","heroid_2")
 
+class HeroSkill(generics.ListCreateAPIView):
+    permission_classes = (AdminCheck,)
+    queryset = ProjSkill.objects.all()
+    serializer_class = HeroSkillSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
+    filter_class = HeroSkillFilter 
+    search_fields = ("skillid","skillname")
 
 # class UserRegister(generics.ListCreateAPIView):
 #     queryset = Authuser.objects.all()
