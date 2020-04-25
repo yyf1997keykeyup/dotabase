@@ -20,16 +20,17 @@ logger = logging.getLogger('django')
 class HeroList(generics.ListCreateAPIView):
     queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
-    permission_classes = (AdminCheck, )
+    permission_classes = (AdminCheck,)
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroFilter
     search_fields = ('name', 'bio',)
 
 
 class HeroUpdate(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AdminCheck, )
+    permission_classes = (AdminCheck,)
     queryset = ProjHero.objects.all()
     serializer_class = HeroSerializer
+
 
 class ItemList(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
@@ -37,7 +38,7 @@ class ItemList(generics.ListCreateAPIView):
     serializer_class = ItemSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroFilter
-    search_fields = ('itemname', )
+    search_fields = ('itemname',)
 
     # def put(self, request, pk):
     #     hero = ProjHero.objects.get(pk=pk)
@@ -60,18 +61,29 @@ class ItemList(generics.ListCreateAPIView):
     filter_class = ItemFilter
     search_fields = ('item_name')
 
+
 class ItemUpdate(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AdminCheck, )
+    permission_classes = (AdminCheck,)
     queryset = ProjItem.objects.all()
     serializer_class = ItemSerializer
+
 
 class HeroGoodAgainst(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
     queryset = ProjHerogoodagainst.objects.all()
-    serializer_class = HeroGoodAgainstSerializer 
+    serializer_class = HeroGoodAgainstSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroGoodAgainstFilter
-    search_fields = ("heroid_1","heroid_2")
+    search_fields = ("heroid_1", "heroid_2")
+
+    def get(self, request, *args, **kwargs):
+        good_against_relations = self.filter_queryset(self.get_queryset()).values('heroid_2')
+        print(good_against_relations)
+        heros = ProjHero.objects.all()
+        heros_results = heros.filter(heroid__in=good_against_relations)
+        serializer = HeroSerializer(heros_results, many=True)
+        return Response(serializer.data)
+
 
 class HeroBadAgainst(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
@@ -79,7 +91,16 @@ class HeroBadAgainst(generics.ListCreateAPIView):
     serializer_class = HeroBadAgainstSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroBadAgainstFilter
-    search_fields = ("heroid_1","heroid_2")
+    search_fields = ("heroid_1", "heroid_2")
+
+    def get(self, request, *args, **kwargs):
+        bad_against_relations = self.filter_queryset(self.get_queryset()).values('heroid_2')
+        print(bad_against_relations)
+        heros = ProjHero.objects.all()
+        heros_results = heros.filter(heroid__in=bad_against_relations)
+        serializer = HeroSerializer(heros_results, many=True)
+        return Response(serializer.data)
+
 
 class HeroBestCombos(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
@@ -87,33 +108,45 @@ class HeroBestCombos(generics.ListCreateAPIView):
     serializer_class = HeroBestCombosSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = HeroBestCombosFilter
-    search_fields = ("heroid_1","heroid_2")
+    search_fields = ("heroid_1", "heroid_2")
+
+    def get(self, request, *args, **kwargs):
+        best_combos_relations = self.filter_queryset(self.get_queryset()).values('heroid_2')
+        print(best_combos_relations)
+        heros = ProjHero.objects.all()
+        heros_results = heros.filter(heroid__in=best_combos_relations)
+        serializer = HeroSerializer(heros_results, many=True)
+        return Response(serializer.data)
 
 class Skill(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
     queryset = ProjSkill.objects.all()
     serializer_class = SkillSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
-    filter_class = SkillFilter 
-    search_fields = ("skillid","skillname")
+    filter_class = SkillFilter
+    search_fields = ("skillid", "skillname")
+
 
 class SkillUpdate(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AdminCheck, )
+    permission_classes = (AdminCheck,)
     queryset = ProjSkill.objects.all()
     serializer_class = SkillSerializer
+
 
 class HeroSkill(generics.ListCreateAPIView):
     permission_classes = (AdminCheck,)
     queryset = ProjHeroSkill.objects.all()
     serializer_class = HeroSkillSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
-    filter_class = HeroSkillFilter 
-    search_fields = ("hsid","heroid","skillid")
+    filter_class = HeroSkillFilter
+    search_fields = ("hsid", "heroid", "skillid")
+
 
 class HeroSkillUpdate(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AdminCheck, )
+    permission_classes = (AdminCheck,)
     queryset = ProjHeroSkill.objects.all()
     serializer_class = HeroSkillSerializer
+
 
 # class UserRegister(generics.ListCreateAPIView):
 #     queryset = Authuser.objects.all()
@@ -128,12 +161,14 @@ class LogList(generics.ListAPIView):
     serializer_class = LogSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
     filter_class = LogFilter
-    search_fields = ('hero', 'attr_damage', 'attr_maga', 'attr_health', )
+    search_fields = ('hero', 'attr_damage', 'attr_maga', 'attr_health',)
+
 
 class LogUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AdminCheck,)
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
+
 
 # class LogRegister(generics.ListAPIView):
 #     queryset = ProjHeroLog.objects.all()
@@ -155,11 +190,9 @@ class Login(generics.ListCreateAPIView):
             if account is not None:
                 auth.login(request, account)
                 return Response({
-                        'msg': 'login successfully',
-                        'state': True
-                    }, status=status.HTTP_200_OK)
+                    'msg': 'login successfully',
+                    'state': True
+                }, status=status.HTTP_200_OK)
         else:
             logger.info(serializer.errors)
             return Response({'msg': 'parameters invalid', 'state': False}, status=status.HTTP_400_BAD_REQUEST)
-
-
