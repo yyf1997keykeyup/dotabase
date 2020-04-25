@@ -31,13 +31,13 @@
                                     <img :src="hero.imageurl" class="img-fluid" alt="">
                                 </div>
                             </div>
-                            <div v-for="skill in skills" :key="skill.skill_id">
+                            <div v-for="skill in skills" :key="skill.skillid">
                                 <div class="col-md-2 col-sm-6">
                                 <div class="about-img-box">
                                     <div class="image">
-                                        <img :src="skill.image_url" style="width:90px" :title="skill.info">
+                                        <img :src="skill.imageurl" style="width:90px" :title="skill.info">
                                     </div>
-                                    <h5>{{skill.skill_name}}</h5>
+                                    <h5>{{skill.skillname}}</h5>
                                 </div>
                                 </div>
                             </div>
@@ -149,6 +149,7 @@
     computed: mapState({
       mock: state => state.debug.config.mock,
       token: state => state.login.user.token,
+      operateSkillApi: state => state.api.host + state.api.backend.operateSkill,
       operateHeroApi: state => state.api.host + state.api.backend.operateHero,
       getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId,
       getSkillByHeroIdApi: state => state.api.host + state.api.backend.getSkillByHeroId,
@@ -159,6 +160,7 @@
       return {
         hero: {},
         skills: {},
+        skillId: [],
         logs: [],
         errors: [],
       }
@@ -187,7 +189,7 @@
                         this.$store.commit('login/logoutRequest')
                         this.$router.push({name: "login"})
                     } else {
-                        alert("You don't have the authorization!")
+                        // alert("You don't have the authorization!")
                         // this.$router.push({name: "homepage"})
                     }
                 }
@@ -195,11 +197,43 @@
             // get hero skill info
             axios({  
                 method: 'GET', 
-                url: this.getSkillByHeroIdApi + "?hero=" + this.$route.params.heroid,
+                url: this.getSkillByHeroIdApi + "?heroid=" + this.$route.params.heroid,
                 headers: {Authorization: this.token}, 
             })
             .then(response => {
-                this.skills = response.data
+                var params = []
+                for(var i = 0; i < response.data.length; i++) {
+                    this.skillId.push(response.data[i].skillid)
+                    // alert(this.operateSkillApi)
+                    params.push(axios({
+                        method: 'GET', 
+                        url: this.operateSkillApi + "?skillid=" + response.data[i].skillid,
+                        headers: {Authorization: this.token}
+                    }))
+                }
+                // alert(JSON.stringify(this.skillId))
+                // alert(JSON.stringify(params))
+                axios.all(params)
+                    .then(axios.spread((...args) => {
+                        for(var i = 0; i < args.length;i++) {
+                            alert(JSON.stringify(args[i].data))
+                            this.skills.push(args[i].data)
+                        }
+                        // this.skills = args
+                        // alert(JSON.stringify(args))
+                    }))
+                    .catch((error) => {
+                        if (error.response.status === 401) {
+                            if (error.response.data.detail != "Authentication credentials were not provided.") {
+                                alert("Timeout! Please Login!")
+                                this.$store.commit('login/logoutRequest')
+                                this.$router.push({name: "login"})
+                            } else {
+                                // alert("You don't have the authorization!")
+                                // this.$router.push({name: "homepage"})
+                            }
+                        }
+                    })                    
             }, error => {
                 if (error.response.status === 401) {
                     if (error.response.data.detail != "Authentication credentials were not provided.") {
@@ -207,7 +241,7 @@
                         this.$store.commit('login/logoutRequest')
                         this.$router.push({name: "login"})
                     } else {
-                        alert("You don't have the authorization!")
+                        // alert("You don't have the authorization!")
                         // this.$router.push({name: "homepage"})
                     }
                 }
@@ -227,7 +261,7 @@
                         this.$store.commit('login/logoutRequest')
                         this.$router.push({name: "login"})
                     } else {
-                        alert("You don't have the authorization!")
+                        // alert("You don't have the authorization!")
                         // this.$router.push({name: "homepage"})
                     }
                 }
@@ -260,7 +294,7 @@
                                 this.$store.commit('login/logoutRequest')
                                 this.$router.push({name: "login"})
                             } else {
-                                alert("You don't have the authorization!")
+                                // alert("You don't have the authorization!")
                                 // this.$router.push({name: "homepage"})
                             }
                         }
