@@ -48,3 +48,13 @@ class HeroBestCombosSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjHerobestcombos
         fields = '__all__'
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjSkill
+        fields = '__all__'
+
+class HeroSkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjHeroSkill
+        fields = '__all__'

@@ -173,7 +173,7 @@ export default {
                 this.$store.commit('login/logoutRequest')
                 this.$router.push({name: "login"})
               } else {
-                alert("You don't have the authorization!")
+                // alert("You don't have the authorization!")
                 // this.$router.push({name: "homepage"})
               }
             }
