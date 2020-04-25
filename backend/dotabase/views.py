@@ -98,6 +98,7 @@ class HeroBestCombos(generics.ListCreateAPIView):
 #     search_fields = ('name', 'password',)
 
 class LogList(generics.ListAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
@@ -105,6 +106,7 @@ class LogList(generics.ListAPIView):
     search_fields = ('hero', 'attr_damage', 'attr_maga', 'attr_health', )
 
 class LogUpdate(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (AdminCheck,)
     queryset = ProjHeroLog.objects.all()
     serializer_class = LogSerializer
 

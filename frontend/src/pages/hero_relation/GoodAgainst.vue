@@ -32,21 +32,23 @@
                             <th>Good Against</th>
                           </tr>
                           <tr v-for="(goodAgainstIds, sourseId, index) in goodAgainstList" :key="index">
-                            <th style="width:300px">
-                              <div class="row">
+                            <th style="width:200px">
+                              <div class="portfolio-items row">
                                 <Hero
+                                  class="col-lg-12"
                                   :key="sourseId"
                                   :id="sourseId"
                                   :name="id2heros[sourseId].name"
                                   :image="id2heros[sourseId].imageurl"/>
-                                  <router-link :to="{name: 'hero_detail', params: {'heroid': sourseId}}">
+                                  <!-- <router-link :to="{name: 'hero_detail', params: {'heroid': sourseId}}">
                                     <a style="font-size:35px">{{id2heros[sourseId].name}}</a>
-                                  </router-link>
+                                  </router-link> -->
                               </div>
                             </th>
                             <th>
-                              <div class="portfolio-items row">
+                              <div  class="portfolio-items row">
                                 <Hero 
+                                  class="col-lg-3"
                                   v-for="gaId in goodAgainstIds"
                                   :key="gaId"
                                   :id="gaId"
