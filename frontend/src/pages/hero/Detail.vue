@@ -72,29 +72,66 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="expert-box text-center">
-                                        <img src="https://www.dotafire.com/images/hero/icon/sven.png" class="img-fluid" alt="" />
-                                        <h3>Best Against</h3>
-                                        <p class="mb-0">hahahaha hahah hahahhaa hahahha hahhaha</p>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Good Against Heros
+                                        </h4>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="expert-box text-center">
-                                        <img src="https://www.dotafire.com/images/hero/icon/anti-mage.png" class="img-fluid" alt="" />
-                                        <h3>Bad Against</h3>
-                                        <p class="mb-0">hahahaha hahah hahahh ahahah haha hhaha</p>
+                                <section id="portfolio" class="section portfolio-section">
+                                    <div class="row">
+                                        <Hero 
+                                        class="col-lg-2"
+                                        v-for="gaHero in goodAgainstHeros"
+                                            :key="gaHero.heroid"
+                                            :id="gaHero.heroid"
+                                            :name="gaHero.name"
+                                            :image="gaHero.imageurl"/>
+                                    </div>
+                              </section>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Bad Against Heros
+                                        </h4>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="expert-box text-center">
-                                        <img src="https://www.dotafire.com/images/hero/icon/phantom-assassin.png" class="img-fluid" alt="" />
-                                        <h3>Best Combo</h3>
-                                        <p class="mb-0">haha hahahahah hahahha ahah ahh ahah haha</p>
+                                <section id="portfolio" class="section portfolio-section">
+                                    <div class="row">
+                                        <Hero 
+                                        class="col-lg-2"
+                                        v-for="baHero in badAgainstHeros"
+                                            :key="baHero.heroid"
+                                            :id="baHero.heroid"
+                                            :name="baHero.name"
+                                            :image="baHero.imageurl"/>
+                                    </div>
+                              </section>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="about-text-block">
+                                    <div class="about-content">
+                                        <h4>
+                                            Best Combo Heros
+                                        </h4>
                                     </div>
                                 </div>
-                            </div> -->
+                                <section id="portfolio" class="section portfolio-section">
+                                    <div class="row">
+                                        <Hero 
+                                        class="col-lg-2"
+                                        v-for="bcHero in bestComboHeros"
+                                            :key="bcHero.heroid"
+                                            :id="bcHero.heroid"
+                                            :name="bcHero.name"
+                                            :image="bcHero.imageurl"/>
+                                    </div>
+                              </section>
+                            </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="about-text-block">
                                     <div class="about-content">
@@ -137,6 +174,7 @@
 </template>
 
 <script>
+    import Hero from '../../components/Hero';
     import MainLayout from '../../layouts/Main.vue'
     import { mapState } from 'vuex'
     import axios from 'axios'
@@ -155,6 +193,8 @@
       getLogByHeroIdApi: state => state.api.host + state.api.backend.getLogByHeroId,
       getSkillByHeroIdApi: state => state.api.host + state.api.backend.getSkillByHeroId,
       getGoodAgainstApi: state => state.api.host + state.api.backend.operateHeroGoodAgainst,
+      getBadAgainstApi: state => state.api.host + state.api.backend.operateHeroBadAgainst,
+      getBestComboApi: state => state.api.host + state.api.backend.operateHeroBestCombos,
 
     }),
     data: function() {
@@ -162,6 +202,9 @@
         hero: {},
         skills: [],
         skillId: [],
+        goodAgainstHeros: [],
+        badAgainstHeros: [],
+        bestComboHeros: [],
         logs: [],
         errors: [],
       }
@@ -227,7 +270,7 @@
                                 this.$store.commit('login/logoutRequest')
                                 this.$router.push({name: "login"})
                             } else {
-                                // alert("You don't have the authorization!")
+                                alert("You don't have the authorization!")
                                 // this.$router.push({name: "homepage"})
                             }
                         }
@@ -239,7 +282,67 @@
                         this.$store.commit('login/logoutRequest')
                         this.$router.push({name: "login"})
                     } else {
-                        // alert("You don't have the authorization!")
+                        alert("You don't have the authorization!")
+                        // this.$router.push({name: "homepage"})
+                    }
+                }
+            })
+            // get good against list
+            axios({  
+                method: 'GET', 
+                url: this.getGoodAgainstApi + "?heroid_1=" + this.$route.params.heroid,
+                headers: {Authorization: this.token}, 
+            })
+            .then(response => {
+                this.goodAgainstHeros = response.data
+            }, error => {
+                if (error.response.status != 401) {
+                    if (error.response.data.detail != "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        // this.$router.push({name: "homepage"})
+                    }
+                }
+            })
+            // get bad against list
+            axios({  
+                method: 'GET', 
+                url: this.getBadAgainstApi + "?heroid_1=" + this.$route.params.heroid,
+                headers: {Authorization: this.token}, 
+            })
+            .then(response => {
+                this.badAgainstHeros = response.data
+            }, error => {
+                if (error.response.status != 401) {
+                    if (error.response.data.detail != "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
+                        // this.$router.push({name: "homepage"})
+                    }
+                }
+            })
+            // get best combo list
+            axios({  
+                method: 'GET', 
+                url: this.getBestComboApi + "?heroid_1=" + this.$route.params.heroid,
+                headers: {Authorization: this.token}, 
+            })
+            .then(response => {
+                this.bestComboHeros = response.data
+            }, error => {
+                if (error.response.status != 401) {
+                    if (error.response.data.detail != "Authentication credentials were not provided.") {
+                        alert("Timeout! Please Login!")
+                        this.$store.commit('login/logoutRequest')
+                        this.$router.push({name: "login"})
+                    } else {
+                        alert("You don't have the authorization!")
                         // this.$router.push({name: "homepage"})
                     }
                 }
@@ -253,13 +356,13 @@
             .then(response => {
                 this.logs = response.data
             }, error => {
-                if (error.response.status === 401) {
+                if (error.response.status != 401) {
                     if (error.response.data.detail != "Authentication credentials were not provided.") {
                         alert("Timeout! Please Login!")
                         this.$store.commit('login/logoutRequest')
                         this.$router.push({name: "login"})
                     } else {
-                        // alert("You don't have the authorization!")
+                        alert("You don't have the authorization!")
                         // this.$router.push({name: "homepage"})
                     }
                 }
@@ -309,6 +412,7 @@
         }
     },
     components: {
+      Hero,
       MainLayout
     }
   }

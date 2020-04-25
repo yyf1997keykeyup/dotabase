@@ -47,6 +47,13 @@
                                                 </div><!--end col-->
                                                 <div class="col-md-12">
                                                     <div class="form-group position-relative">
+                                                        <div class="image">
+                                                            <img :src="hero.imageurl" class="img-fluid" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div><!--end col-->
+                                                <div class="col-md-12">
+                                                    <div class="form-group position-relative">
                                                         <label>Bio</label>
                                                         <textarea v-model="hero.bio" name="comments" id="comments" rows="4" class="form-control pl-5" placeholder="The Bio..."></textarea>
                                                     </div>
