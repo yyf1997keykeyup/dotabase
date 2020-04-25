@@ -32,14 +32,15 @@
                                 </div>
                             </div>
                             <div v-for="skill in skills" :key="skill.skillid">
-                                <div class="col-md-2 col-sm-6">
+                                <div class="col-md-3 col-sm-6">
                                 <div class="about-img-box">
                                     <div class="image">
                                         <img :src="skill.imageurl" style="width:90px" :title="skill.info">
                                     </div>
-                                    <h5>{{skill.skillname}}</h5>
                                 </div>
                                 </div>
+                                <div class="section_title mb-4 text-center"> {{skill.skillname}}</div>
+
                             </div>
                         </div>
 
@@ -159,7 +160,7 @@
     data: function() {
       return {
         hero: {},
-        skills: {},
+        skills: [],
         skillId: [],
         logs: [],
         errors: [],
@@ -211,19 +212,16 @@
                         headers: {Authorization: this.token}
                     }))
                 }
-                // alert(JSON.stringify(this.skillId))
-                // alert(JSON.stringify(params))
                 axios.all(params)
                     .then(axios.spread((...args) => {
                         for(var i = 0; i < args.length;i++) {
-                            alert(JSON.stringify(args[i].data))
-                            this.skills.push(args[i].data)
+                            this.skills.push(args[i].data[0])
                         }
-                        // this.skills = args
-                        // alert(JSON.stringify(args))
+                        alert(JSON.stringify(this.skills))
                     }))
                     .catch((error) => {
-                        if (error.response.status === 401) {
+                        console.log(error)
+                        if (error.response.status != 401) {
                             if (error.response.data.detail != "Authentication credentials were not provided.") {
                                 alert("Timeout! Please Login!")
                                 this.$store.commit('login/logoutRequest')
@@ -235,7 +233,7 @@
                         }
                     })                    
             }, error => {
-                if (error.response.status === 401) {
+                if (error.response.status != 401) {
                     if (error.response.data.detail != "Authentication credentials were not provided.") {
                         alert("Timeout! Please Login!")
                         this.$store.commit('login/logoutRequest')
