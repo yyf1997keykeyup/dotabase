@@ -217,7 +217,7 @@
                         for(var i = 0; i < args.length;i++) {
                             this.skills.push(args[i].data[0])
                         }
-                        alert(JSON.stringify(this.skills))
+                        // alert(JSON.stringify(this.skills))
                     }))
                     .catch((error) => {
                         console.log(error)
