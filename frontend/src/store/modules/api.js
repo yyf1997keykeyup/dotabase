@@ -6,7 +6,8 @@ const state = {
         operateHeroGoodAgainst: "/api/dotabase/hero_good_against/",
         operateHeroBadAgainst: "/api/dotabase/hero_bad_against/",
         operateHeroBestCombos: "/api/dotabase/hero_best_combos/",
-        getSkillByHeroId: "/api/dotabase/hero_skill/",
+        operateSkill: "/api/dotabase/hero_skill/",
+        getSkillByHeroId: "/api/dotabase/hero_hero_skill/",
         getLogByHeroId: "/api/dotabase/hero_log/",
         login: "/api/dotabase/user/get_token/",
     }
